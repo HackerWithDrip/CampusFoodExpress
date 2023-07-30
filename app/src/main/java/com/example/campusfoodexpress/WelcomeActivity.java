@@ -22,4 +22,9 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = new Intent(WelcomeActivity.this,SignupActivity.class);
         startActivity(intent);
     }
+
+    public void onLoginClicked(View view) {
+        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
 }
