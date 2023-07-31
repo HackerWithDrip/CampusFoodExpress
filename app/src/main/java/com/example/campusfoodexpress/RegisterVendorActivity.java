@@ -71,7 +71,11 @@ public class RegisterVendorActivity extends AppCompatActivity {
                     Intent intent = new Intent(this,MainActivity.class);
                     startActivity(intent);
                     return;
+                }else{
+                    Toast.makeText(this,"Registered Failed!",Toast.LENGTH_LONG).show();
                 }
+            }else{
+                Toast.makeText(this,"User: " + username +" already exists",Toast.LENGTH_LONG).show();
             }
 
         }else{
