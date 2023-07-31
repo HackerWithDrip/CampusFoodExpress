@@ -22,7 +22,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
         //set actionbar title Dynamically
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
-            actionBar.setTitle("Registering Vendor...");
+            actionBar.setTitle("Registering Vendor");
         }
     }
 
