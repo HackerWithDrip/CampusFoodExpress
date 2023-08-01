@@ -17,7 +17,7 @@ public class SignupActivity extends AppCompatActivity {
         //set actionbar title Dynamically
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
-            actionBar.setTitle("Signing up...");
+            actionBar.setTitle("Signing up");
         }
     }
 
