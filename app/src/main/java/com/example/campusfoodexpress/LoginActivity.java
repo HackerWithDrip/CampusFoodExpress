@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         //set actionbar title Dynamically
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
-            actionBar.setTitle("Logging in");
+            actionBar.setTitle("Login");
         }
 
         // get the controls references

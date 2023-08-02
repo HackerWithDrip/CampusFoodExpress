@@ -14,12 +14,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="96dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,98 +33,132 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/txtErrorOutputMessage"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/edtBusinessName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="12"
                 android:hint="Business Name"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtContactNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="Contact Number, eg: 0670880796 "
                 android:inputType="phone"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/pickStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="start time, eg: 08:00"
                 android:inputType="time"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/pickEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="end time, eg: 16:00"
                 android:inputType="time"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtClosestBuilding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="Closest Building, eg: Building 9/Embizweni"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtBusinessDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="A short description of the business"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="Username"
                 android:inputType="textPersonName"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:minHeight="48dp" />
+                android:minHeight="48dp"
+                android:padding="8dp" />
 
             <EditText
                 android:id="@+id/edtConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#95C3BEBE"
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-                android:minHeight="48dp" />
-
-            <TextView
-                android:id="@+id/txtErrorOutputMessage"
-                android:layout_width="match_parent"
-                android:layout_height="83dp"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="16sp" />
+                android:minHeight="48dp"
+                android:padding="8dp"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
@@ -130,7 +166,7 @@
         android:layout_width="180dp"
         android:layout_height="72dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/blue"
         android:onClick="onSubmitClicked"
         android:shadowColor="@color/teal_200"
@@ -147,7 +183,7 @@
         android:layout_width="180dp"
         android:layout_height="72dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/grey"
         android:onClick="onCancelClicked"
         android:text="Cancel"
