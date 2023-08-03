@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this,"Welcome!",Toast.LENGTH_LONG).show();
         }else{
             actionBar.setTitle("Dashboard");
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_green)));
+
             Toast.makeText(this,"Logged in successfully!",Toast.LENGTH_SHORT).show();
         }
 

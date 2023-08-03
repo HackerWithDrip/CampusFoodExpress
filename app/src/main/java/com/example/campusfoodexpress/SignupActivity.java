@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,7 +19,7 @@ public class SignupActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle("Signing up");
-        }
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Orange)));        }
     }
 
     public void onRegisterVendorClicked(View view) {
