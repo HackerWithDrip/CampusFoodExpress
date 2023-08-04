@@ -35,4 +35,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         Toast.makeText(this,"You are now offline!",Toast.LENGTH_LONG).show();
     }
+
+    public void onUpdateDetailsClicked(View view) {
+        Intent intent = new Intent(this,UpdateDetailsActivity.class);
+        startActivity(intent);
+
+    }
 }

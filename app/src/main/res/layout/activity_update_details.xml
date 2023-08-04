@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3A3A3A"
-    tools:context=".RegisterVendorActivity">
+    tools:context=".UpdateDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="128dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,11 +78,11 @@
                 android:layout_marginBottom="8dp"
                 android:background="#95C3BEBE"
                 android:ems="10"
+                android:focusable="false"
                 android:hint="Select start time, eg: 08:00"
                 android:inputType="none"
-                android:focusable="false"
-                android:onClick="onTimeInputClicked"
                 android:minHeight="48dp"
+                android:onClick="onTimeInputClicked"
                 android:padding="8dp" />
 
             <EditText
@@ -93,11 +92,11 @@
                 android:layout_marginBottom="8dp"
                 android:background="#95C3BEBE"
                 android:ems="10"
+                android:focusable="false"
                 android:hint="Select closing time, eg: 16:00"
                 android:inputType="none"
-                android:focusable="false"
-                android:onClick="onTimeInputClicked"
                 android:minHeight="48dp"
+                android:onClick="onTimeInputClicked"
                 android:padding="8dp" />
 
             <EditText
@@ -124,42 +123,22 @@
                 android:minHeight="48dp"
                 android:padding="8dp" />
 
-            <EditText
-                android:id="@+id/edtUsername"
+            <Button
+                android:id="@+id/btnDeleteAccount"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Username"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:layout_height="72dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/red"
+                android:backgroundTint="@color/red"
+                android:text="Delete Account"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
 
-            <EditText
-                android:id="@+id/edtPasswordInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:padding="8dp" />
-
-            <EditText
-                android:id="@+id/edtConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:padding="8dp"
-                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
@@ -176,7 +155,7 @@
         android:shadowColor="@color/teal_200"
         android:shadowDx="5"
         android:shadowDy="5"
-        android:text="Submit"
+        android:text="Save"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +168,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/grey"
-        android:onClick="onCancelClicked"
+        android:onClick="onSaveClicked"
         android:text="Cancel"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,5 +176,4 @@
         app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toEndOf="@+id/btnSubmit"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

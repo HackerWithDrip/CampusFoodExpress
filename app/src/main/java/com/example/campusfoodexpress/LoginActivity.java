@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         else{
             Boolean checkVendorPassword = DB.checkUsernamePassword(username,password);
             if(checkVendorPassword){
-                Toast.makeText(this,"Logged in...",Toast.LENGTH_LONG).show();
+                //Create animation for logging in
                 Intent intent = new Intent(this,MainActivity.class);
                 startActivity(intent);
             }else {
