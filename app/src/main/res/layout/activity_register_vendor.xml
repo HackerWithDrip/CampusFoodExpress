@@ -79,8 +79,10 @@
                 android:layout_marginBottom="8dp"
                 android:background="#95C3BEBE"
                 android:ems="10"
-                android:hint="start time, eg: 08:00"
-                android:inputType="time"
+                android:hint="Select start time, eg: 08:00"
+                android:inputType="none"
+                android:focusable="false"
+                android:onClick="onTimeInputClicked"
                 android:minHeight="48dp"
                 android:padding="8dp" />
 
@@ -91,8 +93,10 @@
                 android:layout_marginBottom="8dp"
                 android:background="#95C3BEBE"
                 android:ems="10"
-                android:hint="end time, eg: 16:00"
-                android:inputType="time"
+                android:hint="Select closing time, eg: 16:00"
+                android:inputType="none"
+                android:focusable="false"
+                android:onClick="onTimeInputClicked"
                 android:minHeight="48dp"
                 android:padding="8dp" />
 

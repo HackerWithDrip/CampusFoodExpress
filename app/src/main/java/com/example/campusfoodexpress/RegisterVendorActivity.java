@@ -3,11 +3,15 @@ package com.example.campusfoodexpress;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import database.DatabaseHelper;
@@ -27,7 +31,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle("Register Vendor");
-        }
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Orange)));        }
 
         // get the controls references
         edtBusinessName = findViewById(R.id.edtBusinessName);
@@ -46,6 +50,42 @@ public class RegisterVendorActivity extends AppCompatActivity {
     public void onCancelClicked(View view) {
         Intent intent = new Intent(RegisterVendorActivity.this,SignupActivity.class);
         startActivity(intent);
+    }
+
+    public void onTimeInputClicked(View view) {
+        EditText currentTimeClicked = (EditText) view;
+        int hour = 0; // Default hour value
+        int minute = 0; // Default minute value
+
+        // Get the current time from the EditText, if available
+        String currentTime = currentTimeClicked.getText().toString();
+        if (!currentTime.isEmpty()) {
+            String[] parts = currentTime.split(":");
+            if (parts.length == 2) {
+                hour = Integer.parseInt(parts[0]);
+                minute = Integer.parseInt(parts[1]);
+            }
+        }
+
+
+
+        // Create a TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+                        // Update the EditText with the selected time
+                        String formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute);
+                        currentTimeClicked.setText(formattedTime);
+                    }
+                },
+                hour,
+                minute,
+                DateFormat.is24HourFormat(this)
+        );
+
+        timePickerDialog.show();
     }
 
     public void onSubmitClicked(View view) {
@@ -77,7 +117,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
 
         // Check if startTime is not greater or equal to endTime
         if (isStartTimeAfterEndTime(startTime, endTime)) {
-            txtErrorOutputMessage.setText("Start time cannot be after or equal to end time");
+            txtErrorOutputMessage.setText("Start time cannot be after or equal to closing time");
             pickStartTime.setError("Start time cannot be after or equal to end time");
             pickEndTime.setError("End time cannot be before or equal to start time");
             return;
@@ -96,31 +136,16 @@ public class RegisterVendorActivity extends AppCompatActivity {
         // Validate contactNumber (assuming 10-digit phone number)
         if (!isValidContactNumber(contactNumber)) {
             edtContactNumber.setError("Invalid contact number format (10 digits required)");
+            txtErrorOutputMessage.setText("Invalid contact number format (10 digits required)");
             return;
         } else {
             edtContactNumber.setError(null); // Clear any previous error
         }
 
-        // Validate businessHours (assuming HH:mm format)
-        if (!isValidTimeFormat(pickStartTime.getText().toString())) {
-            txtErrorOutputMessage.setText("Invalid time format (use HH:mm)");
-            pickStartTime.setError("Invalid time format (use HH:mm)");
-            return;
-        } else {
-            txtErrorOutputMessage.setError(null); // Clear any previous error
-        }
-
-        if (!isValidTimeFormat(pickEndTime.getText().toString())) {
-            txtErrorOutputMessage.setText("Invalid time format (use HH:mm)");
-            pickEndTime.setError("Invalid time format (use HH:mm)");
-            return;
-        } else {
-            txtErrorOutputMessage.setError(null); // Clear any previous error
-        }
-
         // Validate username and password (customize the criteria as needed)
         if (!isValidUsername(username)) {
             edtUsername.setError("Invalid username format (minimum length: 5 characters)");
+            txtErrorOutputMessage.setText("Invalid username format (minimum length: 5 characters)");
             return;
         } else {
             edtUsername.setError(null); // Clear any previous error
@@ -128,6 +153,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
 
         if (!isValidPassword(password)) {
             edtPassword.setError("Invalid password format (minimum length: 8 characters)");
+            txtErrorOutputMessage.setText("Invalid password format (minimum length: 8 characters)");
             return;
         } else {
             edtPassword.setError(null); // Clear any previous error
@@ -154,9 +180,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
     }
 
     // Helper method to validate time format (assuming HH:mm format)
-    private boolean isValidTimeFormat(String time) {
-        return time.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]");
-    }
+
 
     // Helper method to validate username (customize the criteria as needed)
     private boolean isValidUsername(String username) {
