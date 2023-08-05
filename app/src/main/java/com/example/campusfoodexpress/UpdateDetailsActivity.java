@@ -20,6 +20,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+
+
     }
 
     public void onTimeInputClicked(View view) {

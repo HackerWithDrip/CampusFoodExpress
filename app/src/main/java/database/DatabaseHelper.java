@@ -105,4 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = vendorDB.rawQuery("SELECT * FROM Vendors WHERE username = ? and password = ?",new String[]{username,password});
         return cursor.getCount()>0;
     }
+
+
 }
