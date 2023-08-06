@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_BIO = "businessBio";
 
     // Menu table
+
     public static final String TABLE_MENU = "Menu";
     public static final String COLUMN_MENU_ID = "menuID";
     public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
