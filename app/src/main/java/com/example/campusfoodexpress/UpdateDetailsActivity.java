@@ -8,11 +8,18 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import database.DatabaseHelper;
 
 public class UpdateDetailsActivity extends AppCompatActivity {
 
+    EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
+    Button btnDeleteAccount,btnSave,btnCancel;
+    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessBio,openingTime,closingTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +27,28 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
+        edtBusinessName = findViewById(R.id.edtBusinessName);
+        edtContactNumber = findViewById(R.id.edtContactNumber);
+        pickStartTime = findViewById(R.id.pickStartTime);
+        pickEndTime = findViewById(R.id.pickEndTime);
+        edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
+        edtBusinessDescription = findViewById(R.id.edtBusinessDescription);
+        btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
+        btnSave = findViewById(R.id.btnSave);
+        btnCancel = findViewById(R.id.btnCancel);
+
+        getAndSetIntentData();
+
+        btnSave.setOnClickListener(view->{
+            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
+                    edtContactNumber.getText().toString().trim(),
+                    edtBusinessDescription.getText().toString().trim(),edtClosestBuilding.getText().toString().trim(),businessHours);
+            setResult(RESULT_OK); // Set the result to indicate success
+            finish();
+        });
+
+
     }
 
     public void onTimeInputClicked(View view) {
@@ -60,5 +89,34 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     public void onCancelClicked(View view) {  //Implement this
+    }
+
+
+    void getAndSetIntentData(){
+        if(getIntent().hasExtra("businessID") && getIntent().hasExtra("businessName") &&
+                getIntent().hasExtra("businessContactNumber") && getIntent().hasExtra("businessLocation") &&
+                getIntent().hasExtra("businessBio")) {
+
+            //Getting data from intent
+            businessID = getIntent().getStringExtra("businessID");
+            businessName = getIntent().getStringExtra("businessName");
+            businessContactNumber = getIntent().getStringExtra("businessContactNumber");
+            businessLocation = getIntent().getStringExtra("businessLocation");
+            businessHours = getIntent().getStringExtra("businessHours");
+
+            //Setting intent data
+            edtBusinessName.setText(businessName);
+            edtContactNumber.setText(businessContactNumber);
+            edtClosestBuilding.setText(businessLocation);
+            edtBusinessDescription.setText(businessBio);
+            businessHours = pickStartTime.toString() +"to "+pickEndTime.toString();
+            //pickStartTime.setText();
+            //*****************************************************************************************NEED TO IMPLEMENT BUSINESS HOURS
+
+
+
+        }else {
+            Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();
+        }
     }
 }

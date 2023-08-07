@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Login.db";
     public static final int DATABASE_VERSION = 1;
+    private  Context context;
 
     // Vendor table
     public static final String TABLE_VENDOR = "Vendors";
@@ -24,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_BIO = "businessBio";
 
     // Menu table
+
     public static final String TABLE_MENU = "Menu";
     public static final String COLUMN_MENU_ID = "menuID";
     public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
@@ -105,4 +108,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = vendorDB.rawQuery("SELECT * FROM Vendors WHERE username = ? and password = ?",new String[]{username,password});
         return cursor.getCount()>0;
     }
+
+    public void updateData(String id_row, String businessName, String businessContacts, String businessBio, String businessLocation, String businessHours){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_BUSINESS_NAME,businessName);
+        cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
+        cv.put(COLUMN_BUSINESS_BIO,businessBio);
+        cv.put(COLUMN_BUSINESS_LOCATION,businessLocation);
+        //cv.put(COLUMN_PAGES,businessHours);
+
+        long results = db.update(TABLE_VENDOR,cv,"id=?",new String[]{id_row});
+
+        if(results > 0){
+            Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();
+
+        }else
+        {
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
 }
