@@ -34,12 +34,12 @@ public class RegisterVendorActivity extends AppCompatActivity {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Orange)));        }
 
         // get the controls references
-        edtBusinessName = findViewById(R.id.edtBusinessName);
-        edtContactNumber = findViewById(R.id.edtContactNumber);
+        edtBusinessName = findViewById(R.id.edtBusinessNameUpdate);
+        edtContactNumber = findViewById(R.id.edtContactNumberUpdate);
         pickStartTime = findViewById(R.id.pickStartTime);
         pickEndTime = findViewById(R.id.pickEndTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
-        edtBusinessDescription = findViewById(R.id.edtBusinessDescription);
+        edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
         edtUsername = findViewById(R.id.edtUsername);
         edtPassword = findViewById(R.id.edtPasswordInput);
         edtConfirmPassword = findViewById(R.id.edtConfirmPassword);

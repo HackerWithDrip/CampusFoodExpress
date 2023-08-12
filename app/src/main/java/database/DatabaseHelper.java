@@ -1,5 +1,6 @@
 package database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import com.example.campusfoodexpress.VendorData;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Login.db";
+    public static final String DATABASE_NAME = "Vendor.db";
     public static final int DATABASE_VERSION = 1;
     private  Context context;
 
@@ -23,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_CONTACT_NUMBER = "businessContactNumber";
     public static final String COLUMN_BUSINESS_HOURS = "businessHours";
     public static final String COLUMN_BUSINESS_LOCATION = "businessLocation";
-    public static final String COLUMN_BUSINESS_BIO = "businessBio";
+    public static final String COLUMN_BUSINESS_BIO = "businessDescription";
 
     // Menu table
 
@@ -36,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -59,19 +61,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + COLUMN_VENDOR_ID + ") REFERENCES " + TABLE_VENDOR + "(" + COLUMN_BUSINESS_ID + "))";
 
         db.execSQL(createVendorsTable);
-        db.execSQL(createMenuTable);
+        //db.execSQL(createMenuTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
+       // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VENDOR);
         onCreate(db);
     }
 
     public Boolean insertVendorData(String username, String password, String businessName,
                                     String businessContactNumber, String businessHours,
-                                    String businessLocation, String businessBio)
+                                    String businessLocation, String businessDescription)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -81,10 +83,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BUSINESS_CONTACT_NUMBER, businessContactNumber);
         cv.put(COLUMN_BUSINESS_HOURS, businessHours);
         cv.put(COLUMN_BUSINESS_LOCATION, businessLocation);
-        cv.put(COLUMN_BUSINESS_BIO, businessBio);
+        cv.put(COLUMN_BUSINESS_BIO, businessDescription);
 
         long result = db.insert(TABLE_VENDOR, null, cv);
-        return result != -1;
+        if(result == -1){
+            Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context,"Registered successfully!",Toast.LENGTH_SHORT).show();
+        }
+        return result !=-1;
     }
 
     public Boolean insertMenuData(int vendorID, String menuDescription) {
@@ -109,16 +116,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getCount()>0;
     }
 
-    public void updateData(String id_row, String businessName, String businessContacts, String businessBio, String businessLocation, String businessHours){
+    public void updateData(String id_row, String businessName, String businessContacts, String businessDescription){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
         cv.put(COLUMN_BUSINESS_NAME,businessName);
         cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
-        cv.put(COLUMN_BUSINESS_BIO,businessBio);
-        cv.put(COLUMN_BUSINESS_LOCATION,businessLocation);
+        cv.put(COLUMN_BUSINESS_BIO,businessDescription);
+
         //cv.put(COLUMN_PAGES,businessHours);
 
-        long results = db.update(TABLE_VENDOR,cv,"id=?",new String[]{id_row});
+        long results = db.update(TABLE_VENDOR,cv,"businessID=?",new String[]{id_row});
 
         if(results > 0){
             Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();
@@ -126,7 +134,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else
         {
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public VendorData getVendorDataByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_VENDOR, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
 
+        if (cursor.moveToFirst()) {
+            // Retrieve data from cursor
+            @SuppressLint("Range") String businessName = cursor.getString(cursor.getColumnIndex(COLUMN_BUSINESS_NAME));
+            @SuppressLint("Range") String businessContactNumber = cursor.getString(cursor.getColumnIndex(COLUMN_BUSINESS_CONTACT_NUMBER));
+            @SuppressLint("Range") String businessLocation = cursor.getString(cursor.getColumnIndex(COLUMN_BUSINESS_LOCATION));
+            @SuppressLint("Range") String businessDescription = cursor.getString(cursor.getColumnIndex(COLUMN_BUSINESS_BIO));
+            @SuppressLint("Range") String businessHours = cursor.getString(cursor.getColumnIndex(COLUMN_BUSINESS_HOURS));
+
+            // Retrieve other relevant data
+
+            // Create and return a VendorData object with the retrieved data
+            return new VendorData(businessName, businessContactNumber,businessHours,businessLocation,businessDescription);
+        } else {
+            return null; // Vendor data not found
         }
     }
 

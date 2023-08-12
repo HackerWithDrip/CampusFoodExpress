@@ -8,11 +8,23 @@ public class VendorData {
     private String businessContactNumber;
     private String businessHours;
     private String businessLocation;
-    private String businessBio;
+    private String businessDescription;
+
+    public VendorData(String businessName, String businessContactNumber, String businessHours, String businessLocation, String businessDescription) {
+        this.businessID = businessID;
+        this.username = username;
+        this.password = password;
+        this.businessName = businessName;
+        this.businessContactNumber = businessContactNumber;
+        this.businessHours = businessHours;
+        this.businessLocation = businessLocation;
+        this.businessDescription = businessDescription;
+    }
 
     public VendorData() {
         // Default constructor
     }
+
 
     public int getBusinessID() {
         return businessID;
@@ -71,10 +83,15 @@ public class VendorData {
     }
 
     public String getBusinessBio() {
-        return businessBio;
+        return businessDescription;
     }
 
     public void setBusinessBio(String businessBio) {
-        this.businessBio = businessBio;
+        this.businessDescription = businessBio;
+    }
+
+    @Override
+    public  String toString(){
+        return businessName + " " +businessContactNumber + " " + businessDescription;
     }
 }
