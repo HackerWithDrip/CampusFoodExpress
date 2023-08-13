@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_BIO = "businessDescription";
 
     // Menu table
-
     public static final String TABLE_MENU = "Menu";
     public static final String COLUMN_MENU_ID = "menuID";
     public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
@@ -116,17 +115,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getCount()>0;
     }
 
-    public void updateData(String id_row, String businessName, String businessContacts, String businessDescription){
+    public void updateData(String id_row, String businessName, String businessContacts,String businessLocation, String businessDescription,String openingTime, String closingTime){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
 
         cv.put(COLUMN_BUSINESS_NAME,businessName);
         cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
         cv.put(COLUMN_BUSINESS_BIO,businessDescription);
+        cv.put(COLUMN_BUSINESS_LOCATION, businessLocation);
+        cv.put(COLUMN_BUSINESS_HOURS,openingTime + " To " + closingTime);
 
         //cv.put(COLUMN_PAGES,businessHours);
 
-        long results = db.update(TABLE_VENDOR,cv,"businessID=?",new String[]{id_row});
+        long results = db.update(TABLE_VENDOR,cv,COLUMN_BUSINESS_ID + " = ?",new String[]{id_row});
 
         if(results > 0){
             Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();

@@ -22,7 +22,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
     EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
     Button btnDeleteAccount,btnSave,btnCancel;
-    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,openingTime,closingTime;
+    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +46,34 @@ public class UpdateDetailsActivity extends AppCompatActivity {
             String username = intent.getStringExtra("username");
             DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
             VendorData vendorData = dbHelper.getVendorDataByUsername(username);
+            businessID = String.valueOf(vendorData.getBusinessID());
             if (vendorData != null) {
+                String businessHours = vendorData.getBusinessHours();
+                String[] parts = businessHours.split(" To "); // Split the string into parts based on " To "
+
+                if (parts.length == 2) {
+                    String closingTime = parts[1]; // The second part should be the closing time
+                    String openingTime = parts[0].replace("Operational Hours: ", ""); // Remove the prefix
+                    pickStartTime.setText(openingTime);
+                    pickEndTime.setText(closingTime);
+                }
                 edtBusinessName.setText(vendorData.getBusinessName());
                 edtContactNumber.setText(vendorData.getBusinessContactNumber());
-                // Populate other UI elements
+                edtClosestBuilding.setText(vendorData.getBusinessLocation());
+                edtBusinessDescription.setText(vendorData.getBusinessBio());
+
             }
         }
 //        getAndSetIntentData();
 
-        btnSave.setOnClickListener(view->{
-            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
-            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
-                    edtContactNumber.getText().toString().trim(),
-                    edtBusinessDescription.getText().toString().trim());
-            setResult(RESULT_OK); // Set the result to indicate success
-            finish();
-        });
+//        btnSave.setOnClickListener(view->{
+//            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+//            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
+//                    edtContactNumber.getText().toString().trim(),edtClosestBuilding.getText().toString().trim(),
+//                    edtBusinessDescription.getText().toString().trim(),pickStartTime.getText().toString(),pickEndTime.getText().toString().trim());
+//            setResult(RESULT_OK); // Set the result to indicate success
+//            finish();
+//        });
 
 
     }
@@ -101,6 +113,28 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     public void onSaveClicked(View view) { //Implement this
+
+//        String openingTime = pickStartTime.getText().toString().trim();
+//        String closingTime = pickEndTime.getText().toString().trim();
+//
+//        if (openingTime.isEmpty() || closingTime.isEmpty()) {
+//            Toast.makeText(this, "Please select both opening and closing times", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+//        dbHelper.updateData(
+//                businessID,
+//                edtBusinessName.getText().toString().trim(),
+//                edtContactNumber.getText().toString().trim(),
+//                edtClosestBuilding.getText().toString().trim(),
+//                edtBusinessDescription.getText().toString().trim(),
+//                openingTime,
+//                closingTime
+//        );
+//
+//        setResult(RESULT_OK); // Set the result to indicate success
+//        finish();
     }
 
     public void onCancelClicked(View view) {  //Implement this

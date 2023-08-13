@@ -91,7 +91,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
     public void onSubmitClicked(View view) {
         String businessName = edtBusinessName.getText().toString();
         String contactNumber = edtContactNumber.getText().toString();
-        String businessHours = "Operational Hours: " + pickStartTime.getText().toString() + " To " + pickEndTime.getText().toString();
+        String businessHours = pickStartTime.getText().toString() + " To " + pickEndTime.getText().toString();
         String businessLocation = edtClosestBuilding.getText().toString();
         String businessBio = edtBusinessDescription.getText().toString();
         String username = edtUsername.getText().toString();

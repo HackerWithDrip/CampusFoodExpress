@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="96dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,11 +132,11 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="0dp"
                 android:background="@color/red"
                 android:backgroundTint="@color/red"
                 android:text="Delete Account"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textStyle="bold|italic" />
 
 
@@ -151,7 +151,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/blue"
-        android:onClick="onSubmitClicked"
+        android:onClick="onSaveClicked"
         android:shadowColor="@color/teal_200"
         android:shadowDx="5"
         android:shadowDy="5"
