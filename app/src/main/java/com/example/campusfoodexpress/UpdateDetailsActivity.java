@@ -3,10 +3,13 @@ package com.example.campusfoodexpress;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +22,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
     EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
     Button btnDeleteAccount,btnSave,btnCancel;
-    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessBio,openingTime,closingTime;
+    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,openingTime,closingTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,23 +31,34 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-        edtBusinessName = findViewById(R.id.edtBusinessName);
-        edtContactNumber = findViewById(R.id.edtContactNumber);
+        edtBusinessName = findViewById(R.id.edtBusinessNameUpdate);
+        edtContactNumber = findViewById(R.id.edtContactNumberUpdate);
         pickStartTime = findViewById(R.id.pickStartTime);
         pickEndTime = findViewById(R.id.pickEndTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
-        edtBusinessDescription = findViewById(R.id.edtBusinessDescription);
+        edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("username")) {
 
-        getAndSetIntentData();
+            String username = intent.getStringExtra("username");
+            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+            VendorData vendorData = dbHelper.getVendorDataByUsername(username);
+            if (vendorData != null) {
+                edtBusinessName.setText(vendorData.getBusinessName());
+                edtContactNumber.setText(vendorData.getBusinessContactNumber());
+                // Populate other UI elements
+            }
+        }
+//        getAndSetIntentData();
 
         btnSave.setOnClickListener(view->{
             DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
             dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
                     edtContactNumber.getText().toString().trim(),
-                    edtBusinessDescription.getText().toString().trim(),edtClosestBuilding.getText().toString().trim(),businessHours);
+                    edtBusinessDescription.getText().toString().trim());
             setResult(RESULT_OK); // Set the result to indicate success
             finish();
         });
@@ -93,23 +108,27 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
 
     void getAndSetIntentData(){
+
+        Log.i("hasExtra",String.valueOf(getIntent().hasExtra("businessContactNumber")));
+
         if(getIntent().hasExtra("businessID") && getIntent().hasExtra("businessName") &&
-                getIntent().hasExtra("businessContactNumber") && getIntent().hasExtra("businessLocation") &&
-                getIntent().hasExtra("businessBio")) {
+                getIntent().hasExtra("businessContactNumber") &&
+                getIntent().hasExtra("businessDescription")) {
 
             //Getting data from intent
-            businessID = getIntent().getStringExtra("businessID");
+            //businessID = getIntent().getStringExtra("businessID");
             businessName = getIntent().getStringExtra("businessName");
             businessContactNumber = getIntent().getStringExtra("businessContactNumber");
-            businessLocation = getIntent().getStringExtra("businessLocation");
-            businessHours = getIntent().getStringExtra("businessHours");
+            businessDescription = getIntent().getStringExtra("businessDescription");
+//            businessLocation = getIntent().getStringExtra("businessLocation");
+//            businessHours = getIntent().getStringExtra("businessHours");
 
             //Setting intent data
             edtBusinessName.setText(businessName);
             edtContactNumber.setText(businessContactNumber);
-            edtClosestBuilding.setText(businessLocation);
-            edtBusinessDescription.setText(businessBio);
-            businessHours = pickStartTime.toString() +"to "+pickEndTime.toString();
+//            edtClosestBuilding.setText(businessLocation);
+            edtBusinessDescription.setText(businessDescription);
+//            businessHours = pickStartTime.toString() +"to "+pickEndTime.toString();
             //pickStartTime.setText();
             //*****************************************************************************************NEED TO IMPLEMENT BUSINESS HOURS
 

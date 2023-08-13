@@ -9,12 +9,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import database.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity {
+    DatabaseHelper databaseHelper;
+    String loggedInVendor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
 
         ActionBar actionBar = getSupportActionBar();
         if(actionBar.equals("Registering Vendor")){
@@ -23,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         }else{
             actionBar.setTitle("Dashboard");
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_green)));
+//            databaseHelper = new DatabaseHelper(MainActivity.this);
+//            databaseHelper.getReadableDatabase();
+            if(intent!=null)
+                loggedInVendor = intent.getStringExtra("loggedInVendor");
 
             Toast.makeText(this,"Logged in successfully!",Toast.LENGTH_SHORT).show();
         }
@@ -37,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onUpdateDetailsClicked(View view) {
-        Intent intent = new Intent(this,UpdateDetailsActivity.class);
+        Intent intent = new Intent(MainActivity.this,UpdateDetailsActivity.class);
+        intent.putExtra("username",loggedInVendor );
         startActivity(intent);
 
     }

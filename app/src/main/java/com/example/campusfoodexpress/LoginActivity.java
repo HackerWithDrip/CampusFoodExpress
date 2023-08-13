@@ -57,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
             if(checkVendorPassword){
                 //Create animation for logging in
                 Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra("loggedInVendor",username);
+                intent.putExtra("password",password);
                 startActivity(intent);
             }else {
                 txtErrorOutputMessage.setText("Invalid username or password!");
