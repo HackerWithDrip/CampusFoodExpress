@@ -172,4 +172,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
             Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void onDeleteAccountClicked(View view) {
+    }
 }
