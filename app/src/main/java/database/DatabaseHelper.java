@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.example.campusfoodexpress.VendorData;
+import com.example.campusfoodexpress.vendor.VendorData;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Vendor.db";
+    public static final String DATABASE_NAME = "CampusFoodExpress.db";
     public static final int DATABASE_VERSION = 1;
     private  Context context;
 
@@ -26,8 +26,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_LOCATION = "businessLocation";
     public static final String COLUMN_BUSINESS_BIO = "businessDescription";
 
-    // Menu table
+    // Customer table
+    public static final String TABLE_CUSTOMER = "Customers";
+    public static final String COLUMN_CUSTOMER_ID = "customerID";
+    public static final String COLUMN_CUSTOMER_FIRSTNAME = "customerFirstname";
+    public static final String COLUMN_CUSTOMER_LASTNAME = "customerLastname";
+    public static final String COLUMN_CUSTOMER_CONTACT_NUMBER = "customerContactNumber";
+    public static final String COLUMN_CUSTOMER_USERNAME = "customerUsername";
+    public static final String COLUMN_CUSTOMER_PASSWORD = "customerPassword";
 
+    // Menu table
     public static final String TABLE_MENU = "Menu";
     public static final String COLUMN_MENU_ID = "menuID";
     public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
@@ -53,6 +61,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_BUSINESS_LOCATION + " TEXT," +
                 COLUMN_BUSINESS_BIO + " TEXT)";
 
+        // Create Customer table
+        String createCustomerTable = "CREATE TABLE " + TABLE_CUSTOMER + "(" +
+                COLUMN_CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                COLUMN_CUSTOMER_FIRSTNAME + " TEXT," +
+                COLUMN_CUSTOMER_LASTNAME + " TEXT," +
+                COLUMN_CUSTOMER_CONTACT_NUMBER + " TEXT," +
+                COLUMN_CUSTOMER_USERNAME + " TEXT," +
+                COLUMN_CUSTOMER_PASSWORD + " TEXT)";
+
         // Create Menu table
         String createMenuTable = "CREATE TABLE " + TABLE_MENU + "(" +
                 COLUMN_MENU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -61,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + COLUMN_VENDOR_ID + ") REFERENCES " + TABLE_VENDOR + "(" + COLUMN_BUSINESS_ID + "))";
 
         db.execSQL(createVendorsTable);
+        db.execSQL(createCustomerTable);
         //db.execSQL(createMenuTable);
     }
 
@@ -68,6 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
        // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VENDOR);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER);
         onCreate(db);
     }
 
@@ -94,6 +113,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result !=-1;
     }
 
+    public Boolean insertCustomerData(String customerUsername, String customerPassword, String customerFName,
+                                    String customerLName, String customerContactNumber)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_CUSTOMER_USERNAME, customerUsername);
+        cv.put(COLUMN_CUSTOMER_PASSWORD, customerPassword);
+        cv.put(COLUMN_CUSTOMER_FIRSTNAME, customerFName);
+        cv.put(COLUMN_CUSTOMER_LASTNAME, customerLName);
+        cv.put(COLUMN_CUSTOMER_CONTACT_NUMBER, customerContactNumber);
+
+        long result = db.insert(TABLE_CUSTOMER, null, cv);
+        if(result == -1){
+            Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context,"Registered successfully!",Toast.LENGTH_SHORT).show();
+        }
+        return result !=-1;
+    }
+
     public Boolean insertMenuData(int vendorID, String menuDescription) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -110,23 +149,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getCount()>0;
     }
 
-    public Boolean checkUsernamePassword(String username, String password){
-        SQLiteDatabase vendorDB = this.getWritableDatabase();
-        Cursor cursor = vendorDB.rawQuery("SELECT * FROM Vendors WHERE username = ? and password = ?",new String[]{username,password});
+    public Boolean checkVendorUsernamePassword(String username, String password){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        Cursor cursor = campusFoodExpressDB.rawQuery("SELECT * FROM Vendors WHERE username = ? and password = ?",new String[]{username,password});
         return cursor.getCount()>0;
     }
 
-    public void updateData(String id_row, String businessName, String businessContacts, String businessDescription){
+    public Boolean checkCustomerUsernamePassword(String username, String password){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        Cursor cursor = campusFoodExpressDB.rawQuery("SELECT * FROM Customers WHERE customerUsername = ? and customerPassword = ?",new String[]{username,password});
+        return cursor.getCount()>0;
+    }
+
+    public void updateData(String id_row, String businessName, String businessContacts,String businessLocation, String businessDescription,String openingTime, String closingTime){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
 
         cv.put(COLUMN_BUSINESS_NAME,businessName);
         cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
         cv.put(COLUMN_BUSINESS_BIO,businessDescription);
+        cv.put(COLUMN_BUSINESS_LOCATION, businessLocation);
+        cv.put(COLUMN_BUSINESS_HOURS,openingTime + " To " + closingTime);
 
         //cv.put(COLUMN_PAGES,businessHours);
 
-        long results = db.update(TABLE_VENDOR,cv,"businessID=?",new String[]{id_row});
+        long results = db.update(TABLE_VENDOR,cv,COLUMN_BUSINESS_ID + " = ?",new String[]{id_row});
 
         if(results > 0){
             Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();

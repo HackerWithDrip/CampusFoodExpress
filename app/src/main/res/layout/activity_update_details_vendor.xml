@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateDetailsActivity">
+    tools:context=".vendor.UpdateDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="96dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/txtErrorOutputMessage"
+                android:id="@+id/txtErrorOutputMessageCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/edtBusinessNameUpdate"
+                android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -60,7 +60,7 @@
                 android:padding="8dp" />
 
             <EditText
-                android:id="@+id/edtContactNumberUpdate"
+                android:id="@+id/edtContactNumberCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
                 android:padding="8dp" />
 
             <EditText
-                android:id="@+id/pickStartTime"
+                android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -123,21 +123,25 @@
                 android:minHeight="48dp"
                 android:padding="8dp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="39dp" />
+
             <Button
                 android:id="@+id/btnDeleteAccount"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/red"
+                android:layout_margin="8dp"
                 android:backgroundTint="@color/red"
+                android:onClick="onDeleteAccountClicked"
+                android:shadowColor="@color/teal_200"
                 android:text="Delete Account"
-                android:textSize="18sp"
-                android:textStyle="bold|italic" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 
         </LinearLayout>
@@ -151,12 +155,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
         android:backgroundTint="@color/blue"
-        android:onClick="onSubmitClicked"
+        android:onClick="onSaveClicked"
         android:shadowColor="@color/teal_200"
         android:shadowDx="5"
         android:shadowDy="5"
         android:text="Save"
         android:textSize="20sp"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -171,6 +176,7 @@
         android:onClick="onSaveClicked"
         android:text="Cancel"
         android:textSize="20sp"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"

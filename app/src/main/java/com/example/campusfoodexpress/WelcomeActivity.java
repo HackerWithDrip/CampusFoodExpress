@@ -23,12 +23,12 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void onSignUpClicked(View view) {
-        Intent intent = new Intent(WelcomeActivity.this,SignupActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 
     public void onLoginClicked(View view) {
-        Intent intent = new Intent(WelcomeActivity.this,LoginActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }

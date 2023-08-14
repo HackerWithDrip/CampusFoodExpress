@@ -1,4 +1,4 @@
-package com.example.campusfoodexpress;
+package com.example.campusfoodexpress.vendor;
 
 public class VendorData {
     private int businessID;

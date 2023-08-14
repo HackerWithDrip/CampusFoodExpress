@@ -1,9 +1,8 @@
-package com.example.campusfoodexpress;
+package com.example.campusfoodexpress.vendor;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -16,24 +15,26 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.R;
+
 import database.DatabaseHelper;
 
 public class UpdateDetailsActivity extends AppCompatActivity {
 
     EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
     Button btnDeleteAccount,btnSave,btnCancel;
-    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,openingTime,closingTime;
+    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_details);
+        setContentView(R.layout.activity_update_details_vendor);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-        edtBusinessName = findViewById(R.id.edtBusinessNameUpdate);
-        edtContactNumber = findViewById(R.id.edtContactNumberUpdate);
-        pickStartTime = findViewById(R.id.pickStartTime);
+        edtBusinessName = findViewById(R.id.edtFirstName);
+        edtContactNumber = findViewById(R.id.edtContactNumberCustomer);
+        pickStartTime = findViewById(R.id.edtLastName);
         pickEndTime = findViewById(R.id.pickEndTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
         edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
@@ -46,22 +47,34 @@ public class UpdateDetailsActivity extends AppCompatActivity {
             String username = intent.getStringExtra("username");
             DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
             VendorData vendorData = dbHelper.getVendorDataByUsername(username);
+            businessID = String.valueOf(vendorData.getBusinessID());
             if (vendorData != null) {
+                String businessHours = vendorData.getBusinessHours();
+                String[] parts = businessHours.split(" To "); // Split the string into parts based on " To "
+
+                if (parts.length == 2) {
+                    String closingTime = parts[1]; // The second part should be the closing time
+                    String openingTime = parts[0].replace("Operational Hours: ", ""); // Remove the prefix
+                    pickStartTime.setText(openingTime);
+                    pickEndTime.setText(closingTime);
+                }
                 edtBusinessName.setText(vendorData.getBusinessName());
                 edtContactNumber.setText(vendorData.getBusinessContactNumber());
-                // Populate other UI elements
+                edtClosestBuilding.setText(vendorData.getBusinessLocation());
+                edtBusinessDescription.setText(vendorData.getBusinessBio());
+
             }
         }
 //        getAndSetIntentData();
 
-        btnSave.setOnClickListener(view->{
-            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
-            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
-                    edtContactNumber.getText().toString().trim(),
-                    edtBusinessDescription.getText().toString().trim());
-            setResult(RESULT_OK); // Set the result to indicate success
-            finish();
-        });
+//        btnSave.setOnClickListener(view->{
+//            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+//            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
+//                    edtContactNumber.getText().toString().trim(),edtClosestBuilding.getText().toString().trim(),
+//                    edtBusinessDescription.getText().toString().trim(),pickStartTime.getText().toString(),pickEndTime.getText().toString().trim());
+//            setResult(RESULT_OK); // Set the result to indicate success
+//            finish();
+//        });
 
 
     }
@@ -101,6 +114,28 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     public void onSaveClicked(View view) { //Implement this
+
+//        String openingTime = pickStartTime.getText().toString().trim();
+//        String closingTime = pickEndTime.getText().toString().trim();
+//
+//        if (openingTime.isEmpty() || closingTime.isEmpty()) {
+//            Toast.makeText(this, "Please select both opening and closing times", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+//        dbHelper.updateData(
+//                businessID,
+//                edtBusinessName.getText().toString().trim(),
+//                edtContactNumber.getText().toString().trim(),
+//                edtClosestBuilding.getText().toString().trim(),
+//                edtBusinessDescription.getText().toString().trim(),
+//                openingTime,
+//                closingTime
+//        );
+//
+//        setResult(RESULT_OK); // Set the result to indicate success
+//        finish();
     }
 
     public void onCancelClicked(View view) {  //Implement this
@@ -137,5 +172,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         }else {
             Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onDeleteAccountClicked(View view) {
     }
 }

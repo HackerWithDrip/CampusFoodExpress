@@ -8,6 +8,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.campusfoodexpress.customer.RegisterCustomerActivity;
+import com.example.campusfoodexpress.vendor.RegisterVendorActivity;
+
 public class SignupActivity extends AppCompatActivity {
 
     @Override
@@ -23,11 +26,12 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onRegisterVendorClicked(View view) {
-        Intent intent = new Intent(SignupActivity.this,RegisterVendorActivity.class);
+        Intent intent = new Intent(SignupActivity.this, RegisterVendorActivity.class);
         startActivity(intent);
     }
 
     public void onRegisterCustomerClicked(View view) {
-        //Still to implement this
+        Intent intent = new Intent(SignupActivity.this, RegisterCustomerActivity.class);
+        startActivity(intent);
     }
 }

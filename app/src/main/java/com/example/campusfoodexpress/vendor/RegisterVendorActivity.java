@@ -1,4 +1,4 @@
-package com.example.campusfoodexpress;
+package com.example.campusfoodexpress.vendor;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.example.campusfoodexpress.R;
+import com.example.campusfoodexpress.SignupActivity;
 
 import database.DatabaseHelper;
 
@@ -31,24 +34,25 @@ public class RegisterVendorActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle("Register Vendor");
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Orange)));        }
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Orange)));
+        }
 
         // get the controls references
-        edtBusinessName = findViewById(R.id.edtBusinessNameUpdate);
-        edtContactNumber = findViewById(R.id.edtContactNumberUpdate);
-        pickStartTime = findViewById(R.id.pickStartTime);
+        edtBusinessName = findViewById(R.id.edtFirstName);
+        edtContactNumber = findViewById(R.id.edtContactNumberCustomer);
+        pickStartTime = findViewById(R.id.edtLastName);
         pickEndTime = findViewById(R.id.pickEndTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
         edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
-        edtUsername = findViewById(R.id.edtUsername);
-        edtPassword = findViewById(R.id.edtPasswordInput);
-        edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
-        txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessage);
+        edtUsername = findViewById(R.id.edtUsernameCustomer);
+        edtPassword = findViewById(R.id.edtPasswordCustomer);
+        edtConfirmPassword = findViewById(R.id.edtConfirmPasswordCustomer);
+        txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessageCustomer);
         DB = new DatabaseHelper(this);
     }
 
     public void onCancelClicked(View view) {
-        Intent intent = new Intent(RegisterVendorActivity.this,SignupActivity.class);
+        Intent intent = new Intent(RegisterVendorActivity.this, SignupActivity.class);
         startActivity(intent);
     }
 
@@ -89,12 +93,12 @@ public class RegisterVendorActivity extends AppCompatActivity {
     }
 
     public void onSubmitClicked(View view) {
-        String businessName = edtBusinessName.getText().toString();
-        String contactNumber = edtContactNumber.getText().toString();
-        String businessHours = "Operational Hours: " + pickStartTime.getText().toString() + " To " + pickEndTime.getText().toString();
+        String businessName = edtBusinessName.getText().toString().trim();
+        String contactNumber = edtContactNumber.getText().toString().trim();
+        String businessHours = pickStartTime.getText().toString() + " To " + pickEndTime.getText().toString();
         String businessLocation = edtClosestBuilding.getText().toString();
         String businessBio = edtBusinessDescription.getText().toString();
-        String username = edtUsername.getText().toString();
+        String username = edtUsername.getText().toString().trim();
         String password = edtPassword.getText().toString();
         String confirmPassword = edtConfirmPassword.getText().toString();
 
@@ -106,12 +110,6 @@ public class RegisterVendorActivity extends AppCompatActivity {
                 contactNumber.trim().equals("") || businessLocation.trim().equals("") ||
                 businessBio.trim().equals("")) {
             txtErrorOutputMessage.setText("All fields are required");
-
-
-//            edtBusinessName.setError("Enter business name");
-//            edtContactNumber.setError("Enter contact numbers (eg: 0781535577");
-//            pickStartTime.setError("Enter opening time (use HH:mm)");
-//            pickEndTime.setError("Enter closing time (use HH:mm)");
             return;
         }
 
@@ -128,7 +126,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
         }
 
         // Validate password confirmation
-        if (!password.trim().equals(confirmPassword.trim())) {
+        if (!password.equals(confirmPassword)) {
             txtErrorOutputMessage.setText("Passwords do not match!");
             return;
         }
@@ -158,6 +156,8 @@ public class RegisterVendorActivity extends AppCompatActivity {
         } else {
             edtPassword.setError(null); // Clear any previous error
         }
+
+        txtErrorOutputMessage.setText("");
 
         // Register the user
         Boolean checkVendor = DB.checkUsername(username);
