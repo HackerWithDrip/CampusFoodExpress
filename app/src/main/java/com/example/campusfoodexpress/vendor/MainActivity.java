@@ -1,4 +1,4 @@
-package com.example.campusfoodexpress;
+package com.example.campusfoodexpress.vendor;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.LoginActivity;
+import com.example.campusfoodexpress.R;
+
 import database.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_vendor);
         Intent intent = getIntent();
 
         ActionBar actionBar = getSupportActionBar();
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLogOutClicked(View view) {
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         Toast.makeText(this,"You are now offline!",Toast.LENGTH_LONG).show();
     }

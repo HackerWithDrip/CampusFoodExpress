@@ -1,9 +1,8 @@
-package com.example.campusfoodexpress;
+package com.example.campusfoodexpress.vendor;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -16,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.R;
+
 import database.DatabaseHelper;
 
 public class UpdateDetailsActivity extends AppCompatActivity {
@@ -27,13 +28,13 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_details);
+        setContentView(R.layout.activity_update_details_vendor);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-        edtBusinessName = findViewById(R.id.edtBusinessNameUpdate);
-        edtContactNumber = findViewById(R.id.edtContactNumberUpdate);
-        pickStartTime = findViewById(R.id.pickStartTime);
+        edtBusinessName = findViewById(R.id.edtFirstName);
+        edtContactNumber = findViewById(R.id.edtContactNumberCustomer);
+        pickStartTime = findViewById(R.id.edtLastName);
         pickEndTime = findViewById(R.id.pickEndTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
         edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);

@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.customer.CustomerDashboardActivity;
+
 import database.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,15 +35,15 @@ public class LoginActivity extends AppCompatActivity {
 
         // get the controls references
         edtUsernameInput = findViewById(R.id.edtUsernameInput);
-        edtPasswordInput = findViewById(R.id.edtPasswordInput);
-        txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessage);
+        edtPasswordInput = findViewById(R.id.edtPasswordCustomer);
+        txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessageCustomer);
         btnLogIn = findViewById(R.id.btnLogIn);
         DB = new DatabaseHelper(this);
 
     }
 
     public void onCancelClicked(View view) {
-        Intent intent = new Intent(LoginActivity.this,WelcomeActivity.class);
+        Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
         startActivity(intent);
     }
 
@@ -53,14 +55,22 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this,"Log in failed!",Toast.LENGTH_SHORT).show();
         }
         else{
-            Boolean checkVendorPassword = DB.checkUsernamePassword(username,password);
-            if(checkVendorPassword){
+//            Boolean checkVendorPassword = DB.checkVendorUsernamePassword(username,password);
+            Boolean checkCustomerPassword = DB.checkCustomerUsernamePassword(username,password);
+            if(checkCustomerPassword){
                 //Create animation for logging in
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this, CustomerDashboardActivity.class);
                 intent.putExtra("loggedInVendor",username);
                 intent.putExtra("password",password);
                 startActivity(intent);
-            }else {
+            }
+//            else if(checkCustomerPassword){
+//                Intent intent = new Intent(this, MainActivityCustomer.class);
+//                intent.putExtra("loggedInCustomer",username);
+//                intent.putExtra("password",password);
+//                startActivity(intent);
+//            }
+            else {
                 txtErrorOutputMessage.setText("Invalid username or password!");
                 Toast.makeText(this,"Log in failed!",Toast.LENGTH_SHORT).show();
             }

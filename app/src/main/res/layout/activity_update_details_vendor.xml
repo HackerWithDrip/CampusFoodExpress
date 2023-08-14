@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateDetailsActivity">
+    tools:context=".vendor.UpdateDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -38,7 +38,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/txtErrorOutputMessage"
+                android:id="@+id/txtErrorOutputMessageCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/edtBusinessNameUpdate"
+                android:id="@+id/edtFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -60,7 +60,7 @@
                 android:padding="8dp" />
 
             <EditText
-                android:id="@+id/edtContactNumberUpdate"
+                android:id="@+id/edtContactNumberCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -72,7 +72,7 @@
                 android:padding="8dp" />
 
             <EditText
-                android:id="@+id/pickStartTime"
+                android:id="@+id/edtLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
