@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 import com.example.campusfoodexpress.LoginActivity;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.SignupActivity;
+import com.example.campusfoodexpress.WelcomeActivity;
+import com.example.campusfoodexpress.dialogs.LoadingDialog;
 
 import database.DatabaseHelper;
 
@@ -26,7 +29,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
     Button btnDeleteAccount,btnSave,btnCancel;
     String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime,username = "";
-
+    LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +127,15 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 closingTime
         );
         setResult(RESULT_OK); // Set the result to indicate success
-        finish();
+        loadingDialog = new LoadingDialog(UpdateDetailsActivity.this, "Updating and Saving...");
+        loadingDialog.startLoadingDialog();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.showSuccessMessage("Saved Successfully!");
+            }
+        },2500);
     }
 
     
@@ -144,6 +155,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                pickStartTime.setText("");
                pickEndTime.setText("");
                setResult(RESULT_OK);
+               Intent intent = new Intent(this, WelcomeActivity.class);
+               startActivity(intent);
                finish();
            }
         }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,15 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.campusfoodexpress.customer.CustomerDashboardActivity;
+import com.example.campusfoodexpress.dialogs.LoadingDialog;
 import com.example.campusfoodexpress.vendor.MainActivity;
 
 import database.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
     EditText edtUsernameInput,edtPasswordInput;
-    TextView txtErrorOutputMessage;
+    TextView txtErrorOutputMessage,txtLoadingMsg;
     Button btnLogIn,btnCancel;
     DatabaseHelper DB;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,23 @@ public class LoginActivity extends AppCompatActivity {
         txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessageCustomer);
         btnLogIn = findViewById(R.id.btnLogIn);
         DB = new DatabaseHelper(this);
+        loadingDialog = new LoadingDialog(LoginActivity.this, "Logging in...");
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("Title") && intent.getStringExtra("Title").equals("VendorDashboard")) {
+
+            loadingDialog = new LoadingDialog(LoginActivity.this, "Logging Out...");
+            loadingDialog.startLoadingDialog();
+            loadingDialog.showSuccessMessage("You are now Offline!");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.dismissDialog();
+                }
+            }, 3000);
+
+        }
     }
 
     public void onCancelClicked(View view) {
@@ -59,11 +78,26 @@ public class LoginActivity extends AppCompatActivity {
             Boolean checkVendorPassword = DB.checkVendorUsernamePassword(username,password);
             Boolean checkCustomerPassword = DB.checkCustomerUsernamePassword(username,password);
             if(checkVendorPassword){
-                //Create animation for logging in
+
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("loggedInVendor",username);
                 intent.putExtra("password",password);
-                startActivity(intent);
+                intent.putExtra("Title","Log in");
+
+                //Create animation for logging in
+                loadingDialog.startLoadingDialog();
+
+//
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingDialog.dismissDialog();
+                        startActivity(intent);
+                    }
+                },2500);
+
+
             }
             else if(checkCustomerPassword){
                 Intent intent = new Intent(this, CustomerDashboardActivity.class);
