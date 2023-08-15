@@ -108,8 +108,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_VENDOR, null, cv);
         if(result == -1){
             Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(context,"Registered successfully!",Toast.LENGTH_SHORT).show();
         }
         return result !=-1;
     }
@@ -206,10 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_BUSINESS_HOURS,openingTime + " To " + closingTime);
         long results = campusFoodExpressDB.update(TABLE_VENDOR,cv,COLUMN_USERNAME + " = ?",new String[]{username});
 
-        if(results > 0){
-            Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();
-        }else
-        {
+        if(results < 0){
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
         }
         return results>0;

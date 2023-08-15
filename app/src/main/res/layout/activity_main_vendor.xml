@@ -59,7 +59,6 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="56dp"
             android:layout_marginEnd="32dp"
-            android:shadowColor="#3A3A3A"
             android:shadowDx="20"
             android:text="View Current Orders"
             android:textSize="16sp"

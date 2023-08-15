@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.dialogs.LoadingDialog;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.SignupActivity;
 
@@ -24,6 +26,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
             edtClosestBuilding,edtBusinessDescription,edtUsername,edtPassword,edtConfirmPassword;
     TextView txtErrorOutputMessage;
     DatabaseHelper DB;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +167,21 @@ public class RegisterVendorActivity extends AppCompatActivity {
         if (!checkVendor) {
             Boolean isInserted = DB.insertVendorData(username, password, businessName, contactNumber, businessHours, businessLocation, businessBio);
             if (isInserted) {
-                Toast.makeText(this, "Registered successfully!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                loadingDialog = new LoadingDialog(RegisterVendorActivity.this,"Registering...");
+                loadingDialog.startLoadingDialog();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingDialog.dismissDialog();
+                        intent.putExtra("Title","Register Vendor");
+                        startActivity(intent);
+
+                    }
+                },3500);
+
+
             } else {
                 Toast.makeText(this, "Registered Failed!", Toast.LENGTH_LONG).show();
             }
