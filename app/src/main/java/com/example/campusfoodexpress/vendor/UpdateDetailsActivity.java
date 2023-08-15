@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.LoginActivity;
 import com.example.campusfoodexpress.R;
+import com.example.campusfoodexpress.SignupActivity;
 
 import database.DatabaseHelper;
 
@@ -23,7 +25,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
     EditText edtBusinessName,edtContactNumber,pickStartTime,pickEndTime,edtClosestBuilding,edtBusinessDescription;
     Button btnDeleteAccount,btnSave,btnCancel;
-    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime;
+    String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime,username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("username")) {
 
-            String username = intent.getStringExtra("username");
+            username = intent.getStringExtra("username");
             DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
             VendorData vendorData = dbHelper.getVendorDataByUsername(username);
             businessID = String.valueOf(vendorData.getBusinessID());
@@ -65,17 +67,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
             }
         }
-//        getAndSetIntentData();
-
-//        btnSave.setOnClickListener(view->{
-//            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
-//            dbHelper.updateData(businessID, edtBusinessName.getText().toString().trim(),
-//                    edtContactNumber.getText().toString().trim(),edtClosestBuilding.getText().toString().trim(),
-//                    edtBusinessDescription.getText().toString().trim(),pickStartTime.getText().toString(),pickEndTime.getText().toString().trim());
-//            setResult(RESULT_OK); // Set the result to indicate success
-//            finish();
-//        });
-
 
     }
 
@@ -115,65 +106,46 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
     public void onSaveClicked(View view) { //Implement this
 
-//        String openingTime = pickStartTime.getText().toString().trim();
-//        String closingTime = pickEndTime.getText().toString().trim();
-//
-//        if (openingTime.isEmpty() || closingTime.isEmpty()) {
-//            Toast.makeText(this, "Please select both opening and closing times", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
-//        dbHelper.updateData(
-//                businessID,
-//                edtBusinessName.getText().toString().trim(),
-//                edtContactNumber.getText().toString().trim(),
-//                edtClosestBuilding.getText().toString().trim(),
-//                edtBusinessDescription.getText().toString().trim(),
-//                openingTime,
-//                closingTime
-//        );
-//
-//        setResult(RESULT_OK); // Set the result to indicate success
-//        finish();
+        String openingTime = pickStartTime.getText().toString().trim();
+        String closingTime = pickEndTime.getText().toString().trim();
+
+        if (openingTime.isEmpty() || closingTime.isEmpty()) {
+            Toast.makeText(this, "Please select both opening and closing times", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+        dbHelper.updateVendorDetails(
+                username,
+                edtBusinessName.getText().toString().trim(),
+                edtContactNumber.getText().toString().trim(),
+                edtClosestBuilding.getText().toString().trim(),
+                edtBusinessDescription.getText().toString().trim(),
+                openingTime,
+                closingTime
+        );
+        setResult(RESULT_OK); // Set the result to indicate success
+        finish();
     }
 
+    
     public void onCancelClicked(View view) {  //Implement this
     }
 
-
-    void getAndSetIntentData(){
-
-        Log.i("hasExtra",String.valueOf(getIntent().hasExtra("businessContactNumber")));
-
-        if(getIntent().hasExtra("businessID") && getIntent().hasExtra("businessName") &&
-                getIntent().hasExtra("businessContactNumber") &&
-                getIntent().hasExtra("businessDescription")) {
-
-            //Getting data from intent
-            //businessID = getIntent().getStringExtra("businessID");
-            businessName = getIntent().getStringExtra("businessName");
-            businessContactNumber = getIntent().getStringExtra("businessContactNumber");
-            businessDescription = getIntent().getStringExtra("businessDescription");
-//            businessLocation = getIntent().getStringExtra("businessLocation");
-//            businessHours = getIntent().getStringExtra("businessHours");
-
-            //Setting intent data
-            edtBusinessName.setText(businessName);
-            edtContactNumber.setText(businessContactNumber);
-//            edtClosestBuilding.setText(businessLocation);
-            edtBusinessDescription.setText(businessDescription);
-//            businessHours = pickStartTime.toString() +"to "+pickEndTime.toString();
-            //pickStartTime.setText();
-            //*****************************************************************************************NEED TO IMPLEMENT BUSINESS HOURS
-
-
-
-        }else {
-            Toast.makeText(this,"No data",Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void onDeleteAccountClicked(View view) {
+        if (!username.equals("")){
+            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+           boolean isDeleted =  dbHelper.deleteVendor(username);
+           if(isDeleted){
+               Toast.makeText(this, "Account Deleted successfully!", Toast.LENGTH_LONG).show();
+               edtBusinessName.setText("");
+               edtContactNumber.setText("");
+               edtClosestBuilding.setText("");
+               edtBusinessDescription.setText("");
+               pickStartTime.setText("");
+               pickEndTime.setText("");
+               setResult(RESULT_OK);
+               finish();
+           }
+        }
     }
 }

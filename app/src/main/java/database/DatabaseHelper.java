@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import com.example.campusfoodexpress.vendor.VendorData;
+import com.google.android.material.snackbar.Snackbar;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "CampusFoodExpress.db";
@@ -161,29 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getCount()>0;
     }
 
-    public void updateData(String id_row, String businessName, String businessContacts,String businessLocation, String businessDescription,String openingTime, String closingTime){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
 
-
-        cv.put(COLUMN_BUSINESS_NAME,businessName);
-        cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
-        cv.put(COLUMN_BUSINESS_BIO,businessDescription);
-        cv.put(COLUMN_BUSINESS_LOCATION, businessLocation);
-        cv.put(COLUMN_BUSINESS_HOURS,openingTime + " To " + closingTime);
-
-        //cv.put(COLUMN_PAGES,businessHours);
-
-        long results = db.update(TABLE_VENDOR,cv,COLUMN_BUSINESS_ID + " = ?",new String[]{id_row});
-
-        if(results > 0){
-            Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();
-
-        }else
-        {
-            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
-        }
-    }
     public VendorData getVendorDataByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_VENDOR, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
@@ -203,6 +182,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return null; // Vendor data not found
         }
+    }
+
+    public boolean deleteVendor(String username){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?";
+        String[] whereArgs = {username};
+
+        // Delete the entry from the table
+        int vendor = campusFoodExpressDB.delete(TABLE_VENDOR, whereClause, whereArgs);
+        return vendor !=-1;
+    }
+
+    public  boolean updateVendorDetails(String username,String businessName, String businessContacts,String businessLocation, String businessDescription,String openingTime, String closingTime){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        // Delete the entry from the table
+        cv.put(COLUMN_BUSINESS_NAME,businessName);
+        cv.put(COLUMN_BUSINESS_CONTACT_NUMBER,businessContacts);
+        cv.put(COLUMN_BUSINESS_BIO,businessDescription);
+        cv.put(COLUMN_BUSINESS_LOCATION, businessLocation);
+        cv.put(COLUMN_BUSINESS_HOURS,openingTime + " To " + closingTime);
+        long results = campusFoodExpressDB.update(TABLE_VENDOR,cv,COLUMN_USERNAME + " = ?",new String[]{username});
+
+        if(results > 0){
+            Toast.makeText(context,"Updated successfully!",Toast.LENGTH_SHORT).show();
+        }else
+        {
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return results>0;
     }
 
 }
