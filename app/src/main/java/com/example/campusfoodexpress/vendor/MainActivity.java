@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.campusfoodexpress.dialogs.LoadingDialog;
@@ -20,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     String loggedInVendor;
     LoadingDialog loadingDialog;
+    Button btnPaymentOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_vendor);
         Intent intent = getIntent();
+        btnPaymentOptions = findViewById(R.id.btnMaintainPaymentOptions);
 
         ActionBar actionBar = getSupportActionBar();
         if(intent.hasExtra("Title") && intent.getStringExtra("Title").equals("Register Vendor")){
@@ -80,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onUpdateDetailsClicked(View view) {
         Intent intent = new Intent(MainActivity.this,UpdateDetailsActivity.class);
+        intent.putExtra("username",loggedInVendor );
+        startActivity(intent);
+    }
+
+    public void onPaymentOptionsClicked(View view) {
+        Intent intent = new Intent(MainActivity.this,MaintainPaymentOptions.class);
         intent.putExtra("username",loggedInVendor );
         startActivity(intent);
     }
