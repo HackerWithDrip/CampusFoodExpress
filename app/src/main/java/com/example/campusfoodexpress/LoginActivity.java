@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.campusfoodexpress.customer.CustomerDashboardActivity;
+import com.example.campusfoodexpress.vendor.MainActivity;
 
 import database.DatabaseHelper;
 
@@ -55,21 +56,21 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this,"Log in failed!",Toast.LENGTH_SHORT).show();
         }
         else{
-//            Boolean checkVendorPassword = DB.checkVendorUsernamePassword(username,password);
+            Boolean checkVendorPassword = DB.checkVendorUsernamePassword(username,password);
             Boolean checkCustomerPassword = DB.checkCustomerUsernamePassword(username,password);
-            if(checkCustomerPassword){
+            if(checkVendorPassword){
                 //Create animation for logging in
-                Intent intent = new Intent(this, CustomerDashboardActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.putExtra("loggedInVendor",username);
                 intent.putExtra("password",password);
                 startActivity(intent);
             }
-//            else if(checkCustomerPassword){
-//                Intent intent = new Intent(this, MainActivityCustomer.class);
-//                intent.putExtra("loggedInCustomer",username);
-//                intent.putExtra("password",password);
-//                startActivity(intent);
-//            }
+            else if(checkCustomerPassword){
+                Intent intent = new Intent(this, CustomerDashboardActivity.class);
+                intent.putExtra("loggedInCustomer",username);
+                intent.putExtra("password",password);
+                startActivity(intent);
+            }
             else {
                 txtErrorOutputMessage.setText("Invalid username or password!");
                 Toast.makeText(this,"Log in failed!",Toast.LENGTH_SHORT).show();
