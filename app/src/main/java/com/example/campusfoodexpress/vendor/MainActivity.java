@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             actionBar.setTitle("Dashboard");
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_green)));
-//            databaseHelper = new DatabaseHelper(MainActivity.this);
-//            databaseHelper.getReadableDatabase();
             if(intent!=null)
                 loggedInVendor = intent.getStringExtra("loggedInVendor");
 
