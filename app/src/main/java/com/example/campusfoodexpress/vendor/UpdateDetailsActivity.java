@@ -127,6 +127,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         finish();
     }
 
+    
     public void onCancelClicked(View view) {  //Implement this
     }
 
@@ -142,7 +143,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                edtBusinessDescription.setText("");
                pickStartTime.setText("");
                pickEndTime.setText("");
-               setResult(RESULT_OK); // Set the result to indicate success
+               setResult(RESULT_OK);
                finish();
            }
         }
