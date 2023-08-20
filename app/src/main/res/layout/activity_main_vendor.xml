@@ -105,6 +105,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
+            android:onClick="onPaymentOptionsClicked"
             android:text="Maintain Payment Options"
             android:textSize="16sp"
             android:textStyle="bold"
