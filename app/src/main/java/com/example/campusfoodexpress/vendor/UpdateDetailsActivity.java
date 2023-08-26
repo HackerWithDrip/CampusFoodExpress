@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +17,8 @@ import android.widget.Toast;
 
 import com.example.campusfoodexpress.LoginActivity;
 import com.example.campusfoodexpress.R;
-import com.example.campusfoodexpress.SignupActivity;
 import com.example.campusfoodexpress.WelcomeActivity;
+import com.example.campusfoodexpress.dialogs.InteractiveDialog;
 import com.example.campusfoodexpress.dialogs.LoadingDialog;
 
 import database.DatabaseHelper;
@@ -30,6 +29,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     Button btnDeleteAccount,btnSave,btnCancel;
     String businessID,businessName,businessContactNumber,businessLocation,businessHours,businessDescription,pickOpeningTime,closingTime,username = "";
     LoadingDialog loadingDialog;
+    LoadingDialog load;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,22 +143,53 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     public void onDeleteAccountClicked(View view) {
-        if (!username.equals("")){
-            DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
-           boolean isDeleted =  dbHelper.deleteVendor(username);
-           if(isDeleted){
-               Toast.makeText(this, "Account Deleted successfully!", Toast.LENGTH_LONG).show();
-               edtBusinessName.setText("");
-               edtContactNumber.setText("");
-               edtClosestBuilding.setText("");
-               edtBusinessDescription.setText("");
-               pickStartTime.setText("");
-               pickEndTime.setText("");
-               setResult(RESULT_OK);
-               Intent intent = new Intent(this, WelcomeActivity.class);
-               startActivity(intent);
-               finish();
-           }
-        }
+        InteractiveDialog interactiveDialog = new InteractiveDialog(this);
+        interactiveDialog.startInteractiveDialog();
+
+        // Set click listener for the "Yes" button in the confirmation dialog
+        interactiveDialog.btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Dismiss the confirmation dialog
+                interactiveDialog.dismissDialog();
+                // Show the loading dialog
+                LoadingDialog loadingDialog = new LoadingDialog(UpdateDetailsActivity.this, "Deleting Account...");
+                loadingDialog.startLoadingDialog();
+                // Delete the account in the background
+                if (!username.equals("")) {
+                    DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
+                    boolean isDeleted = dbHelper.deleteVendor(username);
+                    if (isDeleted) {
+                        edtBusinessName.setText("");
+                        edtContactNumber.setText("");
+                        edtClosestBuilding.setText("");
+                        edtBusinessDescription.setText("");
+                        pickStartTime.setText("");
+                        pickEndTime.setText("");
+                        setResult(RESULT_OK);
+                        Intent intent = new Intent(UpdateDetailsActivity.this, LoginActivity.class);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Clear input fields
+                                loadingDialog.dismissDialog();
+                                Toast.makeText(view.getContext(),"Account Deleted successfully!",Toast.LENGTH_LONG).show();
+                                startActivity(intent);
+                                finish();
+                            }
+                        }, 5000);
+                    }
+                }
+            }
+        });
+
+        interactiveDialog.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // User clicked "No," dismiss the confirmation dialog
+                interactiveDialog.dismissDialog();
+            }
+        });
     }
 }

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.LoginActivity;
+import com.example.campusfoodexpress.WelcomeActivity;
 import com.example.campusfoodexpress.dialogs.LoadingDialog;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.SignupActivity;
@@ -167,7 +169,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
         if (!checkVendor) {
             Boolean isInserted = DB.insertVendorData(username, password, businessName, contactNumber, businessHours, businessLocation, businessBio);
             if (isInserted) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 loadingDialog = new LoadingDialog(RegisterVendorActivity.this,"Registering...");
                 loadingDialog.startLoadingDialog();
                 Handler handler = new Handler();
@@ -177,11 +179,8 @@ public class RegisterVendorActivity extends AppCompatActivity {
                         loadingDialog.dismissDialog();
                         intent.putExtra("Title","Register Vendor");
                         startActivity(intent);
-
                     }
                 },3500);
-
-
             } else {
                 Toast.makeText(this, "Registered Failed!", Toast.LENGTH_LONG).show();
             }

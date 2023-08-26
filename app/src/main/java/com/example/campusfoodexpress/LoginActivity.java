@@ -46,6 +46,20 @@ public class LoginActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(LoginActivity.this, "Logging in...");
 
         Intent intent = getIntent();
+
+        if(intent.hasExtra("Title") && intent.getStringExtra("Title").equals("Register Vendor")){
+            String loggedInVendor = intent.getStringExtra("loggedInVendor");
+            loadingDialog = new LoadingDialog(LoginActivity.this,"Registering in...");
+            loadingDialog.startLoadingDialog();
+            loadingDialog.showSuccessMessage("Registered successfully!");
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.dismissDialog();
+                }
+            },5000);
+        }
         if (intent.hasExtra("Title") && intent.getStringExtra("Title").equals("VendorDashboard")) {
 
             loadingDialog = new LoadingDialog(LoginActivity.this, "Logging Out...");
@@ -94,8 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         loadingDialog.dismissDialog();
                         startActivity(intent);
+                        finish();
                     }
-                },2500);
+                },1500);
 
 
             }

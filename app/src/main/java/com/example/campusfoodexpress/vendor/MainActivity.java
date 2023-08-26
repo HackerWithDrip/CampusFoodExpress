@@ -31,21 +31,7 @@ public class MainActivity extends AppCompatActivity {
         btnPaymentOptions = findViewById(R.id.btnMaintainPaymentOptions);
 
         ActionBar actionBar = getSupportActionBar();
-        if(intent.hasExtra("Title") && intent.getStringExtra("Title").equals("Register Vendor")){
-            actionBar.setTitle("Dashboard");
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.purple_500)));
-            loggedInVendor = intent.getStringExtra("loggedInVendor");
-            loadingDialog = new LoadingDialog(MainActivity.this,"Registering in...");
-            loadingDialog.startLoadingDialog();
-            loadingDialog.showSuccessMessage("Registered successfully!");
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    loadingDialog.dismissDialog();
-                }
-            },2500);
-        }else if(intent.hasExtra("Title") && intent.getStringExtra("Title").equals("Log in")){
+        if(intent.hasExtra("Title") && intent.getStringExtra("Title").equals("Log in")){
             actionBar.setTitle("Dashboard");
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.purple_500)));
             if(intent!=null){
@@ -59,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                         loadingDialog.showSuccessMessage("Logged in successfully!");
                     }
                 },2500);
-
             }
         }
 
