@@ -3,8 +3,10 @@ package com.example.campusfoodexpress.customer;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.campusfoodexpress.R;
 
@@ -17,5 +19,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Dashboard");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_green)));
+    }
+
+    public void onMyAccountClicked(View view) {
+        Intent intent = new Intent(CustomerDashboardActivity.this,MaintainCustomerActivity.class);
+        startActivity(intent);
+
     }
 }

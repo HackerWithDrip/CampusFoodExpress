@@ -55,7 +55,6 @@ public class LoadingDialog {
                 @Override
                 public void run() {
                     dismissDialog();
-
                 }
             }, 5000); // Adjust the duration as needed
 

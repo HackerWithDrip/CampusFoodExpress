@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.vendor.FoodItem;
 import com.example.campusfoodexpress.vendor.VendorData;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "CampusFoodExpress.db";
@@ -208,6 +212,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
         }
         return results>0;
+    }
+
+    public List<FoodItem> getFoodItems(){
+        List<FoodItem> returnList = new ArrayList<>();
+
+        returnList.add(new  FoodItem(1,"Burger"));
+        returnList.add(new FoodItem(2,"Grilled Chicken"));
+        returnList.add(new FoodItem(3,"Wings & Chips"));
+        returnList.add(new FoodItem(4,"Pie"));
+        returnList.add(new FoodItem(5,"Kota"));
+        returnList.add(new FoodItem(6,"Fish & Chips"));
+        returnList.add(new FoodItem(7,"Stuff for the OG"));
+
+        return  returnList;
     }
 
 }
