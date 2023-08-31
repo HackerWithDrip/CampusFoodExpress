@@ -46,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 },2500);
             }
+        }else if(intent.hasExtra("Saving")){
+            loadingDialog = new LoadingDialog(MainActivity.this,"Saving...");
+            loadingDialog.startLoadingDialog();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    loadingDialog.showSuccessMessage("Saved!");
+                }
+            },2000);
         }
 
     }
@@ -74,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPaymentOptionsClicked(View view) {
         Intent intent = new Intent(MainActivity.this,MaintainPaymentOptions.class);
+        intent.putExtra("username",loggedInVendor );
+        startActivity(intent);
+    }
+
+
+    public void onMaintainMenuClicked(View view) {
+        Intent intent = new Intent(MainActivity.this,MenuActivity.class);
         intent.putExtra("username",loggedInVendor );
         startActivity(intent);
     }
