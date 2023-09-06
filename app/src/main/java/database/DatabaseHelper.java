@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.customer.CustomerData;
 import com.example.campusfoodexpress.vendor.FoodItem;
 import com.example.campusfoodexpress.vendor.VendorData;
 import com.google.android.material.snackbar.Snackbar;
@@ -186,6 +187,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public CustomerData getCustomerDataByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CUSTOMER, null, " customerUsername " + " = ?", new String[]{username}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            // Retrieve data from cursor
+            @SuppressLint("Range") String customerFname = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_FIRSTNAME));
+            @SuppressLint("Range") String customerLname = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_LASTNAME));
+            @SuppressLint("Range") String customerContactNumber = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_CONTACT_NUMBER));
+
+            // Retrieve other relevant data
+
+            return new CustomerData(customerFname,customerLname,customerContactNumber);
+        } else {
+            return null; // Vendor data not found
+        }
+    }
+
     public boolean deleteVendor(String username){
         SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
         String whereClause = "username = ?";
@@ -211,6 +230,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(results < 0){
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
         }
+        return results>0;
+    }
+
+    public boolean updateCustomerDetails(String custUsername,String custFname,String custLname,String custContactNumber){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        cv.put(COLUMN_CUSTOMER_USERNAME, custUsername);
+        cv.put(COLUMN_CUSTOMER_FIRSTNAME,custFname);
+        cv.put(COLUMN_CUSTOMER_LASTNAME,custLname);
+        cv.put(COLUMN_CUSTOMER_CONTACT_NUMBER,custContactNumber);
+        long results = campusFoodExpressDB.update(TABLE_CUSTOMER,cv," customerUsername " + " = ?",new String[]{custUsername});
+        if(results < 0){
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+
+        if(results > 0){
+            Toast.makeText(context,"Updated Successfully!",Toast.LENGTH_LONG).show();
+        }
+
         return results>0;
     }
 
