@@ -58,4 +58,18 @@
         app:srcCompat="@drawable/my_orders"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <Button
+        android:id="@+id/btnLogOutCustomer"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginEnd="24dp"
+        android:onClick="onLogoutClicked"
+        android:text="Log out"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

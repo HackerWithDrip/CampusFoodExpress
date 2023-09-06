@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.campusfoodexpress.LoginActivity;
 import com.example.campusfoodexpress.R;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
@@ -30,5 +31,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         Intent intent = new Intent(CustomerDashboardActivity.this,MaintainCustomerActivity.class);
         intent.putExtra("loggedInCustomer",loggedInCustomer);
         startActivity(intent);
+    }
+
+    public void onLogoutClicked(View view) {
+        Intent intent = new Intent(CustomerDashboardActivity.this, LoginActivity.class);
+        intent.putExtra("loggedInCustomer",loggedInCustomer);
+        startActivity(intent);
+        finish();
     }
 }
