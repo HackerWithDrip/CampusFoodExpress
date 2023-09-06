@@ -215,6 +215,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return vendor !=-1;
     }
 
+    public boolean deleteCustomer(String custUsername){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = " customerUsername = ?";
+        String[] whereArgs = {custUsername};
+
+        // Delete the entry from the table
+        int customer = campusFoodExpressDB.delete(TABLE_CUSTOMER, whereClause, whereArgs);
+        return customer !=-1;
+    }
+
     public  boolean updateVendorDetails(String username,String businessName, String businessContacts,String businessLocation, String businessDescription,String openingTime, String closingTime){
         SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();

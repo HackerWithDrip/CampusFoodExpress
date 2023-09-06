@@ -37,7 +37,6 @@
         </activity>
         <activity
             android:name=".customer.MaintainCustomerActivity"
-            android:parentActivityName=".customer.CustomerDashboardActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
