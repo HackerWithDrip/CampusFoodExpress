@@ -12,6 +12,7 @@ import com.example.campusfoodexpress.R;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
     String loggedInCustomer;
+    static final int UPDATE_ACCOUNT = 11;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,15 +22,13 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.dark_green)));
 
         Intent intent = getIntent();
-        if(intent!=null){
-            loggedInCustomer = intent.getStringExtra("loggedInCustomer");
-        }
+        loggedInCustomer = intent.getStringExtra("loggedInCustomer");
+
     }
 
     public void onMyAccountClicked(View view) {
         Intent intent = new Intent(CustomerDashboardActivity.this,MaintainCustomerActivity.class);
         intent.putExtra("loggedInCustomer",loggedInCustomer);
         startActivity(intent);
-
     }
 }

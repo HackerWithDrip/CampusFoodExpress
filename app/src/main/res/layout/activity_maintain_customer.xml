@@ -97,6 +97,7 @@
         android:layout_width="144dp"
         android:layout_height="56dp"
         android:layout_marginStart="8dp"
+        android:onClick="onSaveCustomerUpdatesClicked"
         android:text="Save"
         android:textSize="18sp"
         android:textStyle="bold"

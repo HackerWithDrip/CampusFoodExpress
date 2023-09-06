@@ -199,7 +199,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             // Retrieve other relevant data
 
-            // Create and return a VendorData object with the retrieved data
             return new CustomerData(customerFname,customerLname,customerContactNumber);
         } else {
             return null; // Vendor data not found
@@ -231,6 +230,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(results < 0){
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
         }
+        return results>0;
+    }
+
+    public boolean updateCustomerDetails(String custUsername,String custFname,String custLname,String custContactNumber){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        cv.put(COLUMN_CUSTOMER_USERNAME, custUsername);
+        cv.put(COLUMN_CUSTOMER_FIRSTNAME,custFname);
+        cv.put(COLUMN_CUSTOMER_LASTNAME,custLname);
+        cv.put(COLUMN_CUSTOMER_CONTACT_NUMBER,custContactNumber);
+        long results = campusFoodExpressDB.update(TABLE_CUSTOMER,cv," customerUsername " + " = ?",new String[]{custUsername});
+        if(results < 0){
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+
+        if(results > 0){
+            Toast.makeText(context,"Updated Successfully!",Toast.LENGTH_LONG).show();
+        }
+
         return results>0;
     }
 

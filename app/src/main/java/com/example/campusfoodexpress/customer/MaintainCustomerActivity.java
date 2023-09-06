@@ -17,6 +17,8 @@ import database.DatabaseHelper;
 public class MaintainCustomerActivity extends AppCompatActivity {
     String loggedInCustomer;
     EditText edtCustFname,edtCustLname,edtCustContactNumber;
+    DatabaseHelper dbHelper;
+    CustomerData customerData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,28 @@ public class MaintainCustomerActivity extends AppCompatActivity {
         edtCustLname = findViewById(R.id.edtCustomerLastName);
         edtCustContactNumber = findViewById(R.id.edtCustomerContactNumber);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(MaintainCustomerActivity.this);
-        CustomerData customerData = dbHelper.getCustomerDataByUsername(loggedInCustomer);
+        dbHelper = new DatabaseHelper(MaintainCustomerActivity.this);
+        customerData = dbHelper.getCustomerDataByUsername(loggedInCustomer);
         edtCustFname.setText(customerData.getCustomerFirstName());
+        edtCustLname.setText(customerData.getCustomerLastName());
+        edtCustContactNumber.setText(customerData.getCustomerContactNumber());
     }
 
     public void onDeleteMyAccountClicked(View view) {
+
     }
+
+    public void onSaveCustomerUpdatesClicked(View view) {
+        dbHelper = new DatabaseHelper(MaintainCustomerActivity.this);
+        dbHelper.updateCustomerDetails(loggedInCustomer,
+                edtCustFname.getText().toString().trim(),
+                edtCustLname.getText().toString().trim(),
+                edtCustContactNumber.getText().toString().trim());
+        setResult(RESULT_OK);
+        Intent intent = new Intent(MaintainCustomerActivity.this,CustomerDashboardActivity.class);
+        intent.putExtra("loggedInCustomer",loggedInCustomer);
+        startActivity(intent);
+//        finish();
+    }
+
 }
