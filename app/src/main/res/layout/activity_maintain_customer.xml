@@ -63,7 +63,7 @@
             app:layout_constraintTop_toBottomOf="@+id/edtCustomerFirstName" />
 
         <EditText
-            android:id="@+id/editTextPhone"
+            android:id="@+id/edtCustomerContactNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
@@ -89,7 +89,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+            app:layout_constraintTop_toBottomOf="@+id/edtCustomerContactNumber" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button

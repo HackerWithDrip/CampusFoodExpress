@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.campusfoodexpress.customer.CustomerData;
 import com.example.campusfoodexpress.vendor.FoodItem;
 import com.example.campusfoodexpress.vendor.VendorData;
 import com.google.android.material.snackbar.Snackbar;
@@ -181,6 +182,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             // Create and return a VendorData object with the retrieved data
             return new VendorData(businessName, businessContactNumber,businessHours,businessLocation,businessDescription);
+        } else {
+            return null; // Vendor data not found
+        }
+    }
+
+    public CustomerData getCustomerDataByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_CUSTOMER, null, " customerUsername " + " = ?", new String[]{username}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            // Retrieve data from cursor
+            @SuppressLint("Range") String customerFname = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_FIRSTNAME));
+            @SuppressLint("Range") String customerLname = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_LASTNAME));
+            @SuppressLint("Range") String customerContactNumber = cursor.getString(cursor.getColumnIndex(COLUMN_CUSTOMER_CONTACT_NUMBER));
+
+            // Retrieve other relevant data
+
+            // Create and return a VendorData object with the retrieved data
+            return new CustomerData(customerFname,customerLname,customerContactNumber);
         } else {
             return null; // Vendor data not found
         }
