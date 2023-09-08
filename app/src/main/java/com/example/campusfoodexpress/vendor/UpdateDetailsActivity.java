@@ -37,10 +37,10 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Update Account");
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blue)));
-        edtBusinessName = findViewById(R.id.edtFirstName);
+        edtBusinessName = findViewById(R.id.edtBusinessName);
         edtContactNumber = findViewById(R.id.edtContactNumberCustomer);
-        pickStartTime = findViewById(R.id.edtLastName);
-        pickEndTime = findViewById(R.id.pickEndTime);
+        pickStartTime = findViewById(R.id.OpeningTime);
+        pickEndTime = findViewById(R.id.closingTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
         edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
         btnDeleteAccount = findViewById(R.id.btnDeleteAccount);
@@ -112,10 +112,72 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         String openingTime = pickStartTime.getText().toString().trim();
         String closingTime = pickEndTime.getText().toString().trim();
 
-        if (openingTime.isEmpty() || closingTime.isEmpty()) {
-            Toast.makeText(this, "Please select both opening and closing times", Toast.LENGTH_SHORT).show();
+        if(edtBusinessName.getText().toString().equals("")){
+            edtBusinessName.setError("Business name is required!");
             return;
         }
+        else {
+            edtBusinessName.setError(null);
+        }
+
+        if(edtContactNumber.getText().toString().trim().equals("")){
+            edtContactNumber.setError("Business contact number is required!");
+            return;
+        }
+        else {
+            edtContactNumber.setError(null);
+        }
+
+        if(pickStartTime.getText().toString().trim().equals("")){
+            pickStartTime.setError("Opening time is required!");
+            return;
+        }
+        else {
+            pickStartTime.setError(null);
+        }
+
+        if(pickEndTime.getText().toString().trim().equals("")){
+            pickEndTime.setError("Closing time is required!");
+            return;
+        }
+        else {
+            pickEndTime.setError(null);
+        }
+        if(edtBusinessDescription.getText().toString().trim().equals("")){
+            edtBusinessDescription.setError("Business description is required!");
+            return;
+        }
+        else {
+            edtBusinessDescription.setError(null);
+        }
+        if(edtClosestBuilding.getText().toString().trim().equals("")){
+            edtClosestBuilding.setError("Business location is required!");
+            return;
+        }
+        else {
+            edtClosestBuilding.setError(null);
+        }
+
+        // Check if startTime is not greater or equal to endTime
+        if (isStartTimeAfterEndTime(pickStartTime.getText().toString().trim(),pickEndTime.getText().toString().trim())) {
+
+            pickStartTime.setError("Start time cannot be after or equal to end time");
+            pickEndTime.setError("End time cannot be before or equal to start time");
+            return;
+        } else {
+            pickStartTime.setError(null); // Clear any previous error
+            pickEndTime.setError(null); // Clear any previous error
+        }
+
+
+        // Validate contactNumber (assuming 10-digit phone number)
+        if (!isValidContactNumber(edtContactNumber.getText().toString().trim())) {
+            edtContactNumber.setError("Invalid contact number format (10 digits required)");
+            return;
+        } else {
+            edtContactNumber.setError(null); // Clear any previous error
+        }
+
         DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
         dbHelper.updateVendorDetails(
                 username,
@@ -126,20 +188,44 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 openingTime,
                 closingTime
         );
-        setResult(RESULT_OK); // Set the result to indicate success
-        loadingDialog = new LoadingDialog(UpdateDetailsActivity.this, "Updating and Saving...");
-        loadingDialog.startLoadingDialog();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadingDialog.showSuccessMessage("Saved Successfully!");
-            }
-        },2500);
+       Intent intent = new Intent(UpdateDetailsActivity.this,MainActivity.class);
+       intent.putExtra("Saving",username);
+       startActivity(intent);
+       finish();
     }
 
+    private boolean isValidContactNumber(String contactNumber) {
+        return contactNumber.matches("\\d{10}");
+    }
+
+    private boolean isStartTimeAfterEndTime(String startTime, String endTime) {
+        try {
+            // Parse time strings to get hours and minutes
+            String[] startTimeParts = startTime.split(":");
+            String[] endTimeParts = endTime.split(":");
+            int startHour = Integer.parseInt(startTimeParts[0]);
+            int startMinute = Integer.parseInt(startTimeParts[1]);
+            int endHour = Integer.parseInt(endTimeParts[0]);
+            int endMinute = Integer.parseInt(endTimeParts[1]);
+
+            // Compare hours and minutes
+            if (startHour > endHour) {
+                return true;
+            } else if (startHour == endHour && startMinute >= endMinute) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return true; // In case of any parsing error, consider the times invalid
+        }
+    }
     
-    public void onCancelClicked(View view) {  //Implement this
+    public void onCancelClicked(View view) {
+        Intent intent = new Intent(UpdateDetailsActivity.this, MainActivity.class);
+        intent.putExtra("Cancelled",username);
+        startActivity(intent);
+        finish();
     }
 
     public void onDeleteAccountClicked(View view) {

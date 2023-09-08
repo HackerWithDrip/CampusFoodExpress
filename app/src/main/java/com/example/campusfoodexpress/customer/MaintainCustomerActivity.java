@@ -96,6 +96,30 @@ public class MaintainCustomerActivity extends AppCompatActivity {
     }
 
     public void onSaveCustomerUpdatesClicked(View view) {
+
+        String custFname,custLname,custContactNumber;
+        custFname =  edtCustFname.getText().toString().trim();
+        custLname =  edtCustLname.getText().toString().trim();
+        custContactNumber =  edtCustContactNumber.getText().toString().trim();
+
+        if(custFname.equalsIgnoreCase("")){
+            edtCustFname.setError("First name cannot be empty!");
+            return;
+        }
+        if(custLname.equalsIgnoreCase("")){
+            edtCustLname.setError("Last name cannot be empty!");
+            return;
+        }
+        if(custContactNumber.equals("")){
+            edtCustContactNumber.setError("Contact numbers required");
+            return;
+        }
+
+        if(!isValidContactNumber(custContactNumber)){
+            edtCustContactNumber.setError("Contact number must be 10 digits");
+            return;
+        }
+
         dbHelper = new DatabaseHelper(MaintainCustomerActivity.this);
         dbHelper.updateCustomerDetails(loggedInCustomer,
                 edtCustFname.getText().toString().trim(),
@@ -113,5 +137,10 @@ public class MaintainCustomerActivity extends AppCompatActivity {
         intent.putExtra("loggedInCustomer",loggedInCustomer);
         startActivity(intent);
         finish();
+    }
+
+    // Helper method to validate contact number (assuming 10-digit phone number)
+    private boolean isValidContactNumber(String contactNumber) {
+        return contactNumber.matches("\\d{10}");
     }
 }
