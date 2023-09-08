@@ -10,11 +10,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="96dp"
+        android:layout_height="640dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,145 +22,306 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutErrorMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutBusinessName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/txtErrorOutputMessageCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/design_default_color_error"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:ems="16"
+                android:minHeight="56dp"
+                android:padding="4dp"
+                android:textColor="@color/red"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutBusinessName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutContactNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutErrorMsg">
 
             <EditText
-                android:id="@+id/edtFirstName"
+                android:id="@+id/edtBusinessName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="12"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_food_bank_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
                 android:hint="Business Name"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutContactNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutOpeningTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutBusinessName">
 
             <EditText
                 android:id="@+id/edtContactNumberCustomer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Contact Number, eg: 0670880796 "
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_call_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
+                android:hint="Contact Number"
                 android:inputType="phone"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutOpeningTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutClosingTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutContactNumber">
 
             <EditText
-                android:id="@+id/edtLastName"
+                android:id="@+id/OpeningTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Select start time, eg: 08:00"
-                android:inputType="none"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_access_time_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
                 android:focusable="false"
+                android:hint="Opening time"
+                android:inputType="none"
+                android:minHeight="64dp"
                 android:onClick="onTimeInputClicked"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck,DuplicateClickableBoundsCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutClosingTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@id/googleLayoutBusinessLocation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutOpeningTime">
 
             <EditText
-                android:id="@+id/pickEndTime"
+                android:id="@+id/closingTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Select closing time, eg: 16:00"
-                android:inputType="none"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_access_time_filled_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
                 android:focusable="false"
+                android:hint="Closing time"
+                android:inputType="none"
+                android:minHeight="64dp"
                 android:onClick="onTimeInputClicked"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutBusinessLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutBusinessDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutClosingTime">
 
             <EditText
                 android:id="@+id/edtClosestBuilding"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Closest Building, eg: Building 9/Embizweni"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_location_on_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
+                android:hint="Closest building number"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutBusinessDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutBusinessLocation">
 
             <EditText
                 android:id="@+id/edtBusinessDescriptionUpdate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="A short description of the business"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_description_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
+                android:hint="Business description"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                app:cornerRadius="50dp"
+                tools:ignore="SpeakableTextPresentCheck,DuplicateClickableBoundsCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutUsername"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutBusinessLocation">
 
             <EditText
-                android:id="@+id/edtUsernameCustomer"
+                android:id="@+id/edtUsername"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
                 android:hint="Username"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toTopOf="@+id/googleLayoutConfirmPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutUsername"
+            app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/edtPasswordCustomer"
+                android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:padding="8dp" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/googleLayoutConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/googleLayoutPassword"
+            app:passwordToggleEnabled="true">
 
             <EditText
-                android:id="@+id/edtConfirmPasswordCustomer"
+                android:id="@+id/edtConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#95C3BEBE"
-                android:ems="10"
-                android:hint="Confirm Password"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="8dp"
+                android:ems="16"
+                android:hint="Confirm password"
                 android:inputType="textPassword"
-                android:minHeight="48dp"
-                android:padding="8dp"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:minHeight="64dp"
+                android:padding="4dp"
+                android:textSize="18sp"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-        </LinearLayout>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
