@@ -97,7 +97,6 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
             btnSwitch = itemView.findViewById(R.id.btnSwitch);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 
-
         }
     }
 }
