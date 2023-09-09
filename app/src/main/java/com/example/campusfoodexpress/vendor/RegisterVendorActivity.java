@@ -43,15 +43,15 @@ public class RegisterVendorActivity extends AppCompatActivity {
         }
 
         // get the controls references
-        edtBusinessName = findViewById(R.id.edtFirstName);
+        edtBusinessName = findViewById(R.id.edtBusinessName);
         edtContactNumber = findViewById(R.id.edtContactNumberCustomer);
-        pickStartTime = findViewById(R.id.edtLastName);
-        pickEndTime = findViewById(R.id.pickEndTime);
+        pickStartTime = findViewById(R.id.OpeningTime);
+        pickEndTime = findViewById(R.id.closingTime);
         edtClosestBuilding = findViewById(R.id.edtClosestBuilding);
         edtBusinessDescription = findViewById(R.id.edtBusinessDescriptionUpdate);
-        edtUsername = findViewById(R.id.edtUsernameCustomer);
-        edtPassword = findViewById(R.id.edtPasswordCustomer);
-        edtConfirmPassword = findViewById(R.id.edtConfirmPasswordCustomer);
+        edtUsername = findViewById(R.id.edtUsername);
+        edtPassword = findViewById(R.id.edtPassword);
+        edtConfirmPassword = findViewById(R.id.edtConfirmPassword);
         txtErrorOutputMessage = findViewById(R.id.txtErrorOutputMessageCustomer);
         DB = new DatabaseHelper(this);
     }

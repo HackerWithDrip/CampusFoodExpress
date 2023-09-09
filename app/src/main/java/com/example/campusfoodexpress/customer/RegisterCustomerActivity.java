@@ -100,6 +100,7 @@ public class RegisterCustomerActivity extends AppCompatActivity {
             if (isInserted) {
                 Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, CustomerDashboardActivity.class);
+                intent.putExtra("loggedInCustomer",customerUsername);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Registered Failed!", Toast.LENGTH_SHORT).show();

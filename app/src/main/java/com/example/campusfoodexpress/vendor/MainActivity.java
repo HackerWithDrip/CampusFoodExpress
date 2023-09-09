@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 },2500);
             }
         }else if(intent.hasExtra("Saving")){
+            loggedInVendor = intent.getStringExtra("Saving");
             loadingDialog = new LoadingDialog(MainActivity.this,"Saving...");
             loadingDialog.startLoadingDialog();
             Handler handler = new Handler();
@@ -57,7 +59,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             },2000);
         }
-
+        else if(intent.hasExtra("Cancelled")){
+            Log.i("HERE","CANCELLED CLICKED");
+            loggedInVendor = intent.getStringExtra("Cancelled");
+        }
     }
 
     public void onLogOutClicked(View view) {
