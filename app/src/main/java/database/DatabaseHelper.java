@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.campusfoodexpress.customer.CustomerData;
 import com.example.campusfoodexpress.vendor.FoodItem;
+import com.example.campusfoodexpress.vendor.PaymentOption;
 import com.example.campusfoodexpress.vendor.VendorData;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +32,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BUSINESS_HOURS = "businessHours";
     public static final String COLUMN_BUSINESS_LOCATION = "businessLocation";
     public static final String COLUMN_BUSINESS_BIO = "businessDescription";
+
+    // Payment Options table
+    public static final String TABLE_PAYMENT = "PaymentOptionsAvailable";
+    public static final String COLUMN_CARD_PAYMENT_OPTION = "cardPaymentOption";
+    public static final String COLUMN_CASH_PAYMENT_OPTION = "cashPaymentOption";
+    public static final String COLUMN_VENDOR_USERNAME = "username";
+
 
     // Customer table
     public static final String TABLE_CUSTOMER = "Customers";
@@ -67,6 +75,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_BUSINESS_LOCATION + " TEXT," +
                 COLUMN_BUSINESS_BIO + " TEXT)";
 
+        String createPaymentOptionsTable = "CREATE TABLE " + TABLE_PAYMENT + "(" +
+                COLUMN_VENDOR_USERNAME + " TEXT," +
+                COLUMN_CARD_PAYMENT_OPTION + " TEXT," +
+                COLUMN_CASH_PAYMENT_OPTION + " TEXT)";
+
         // Create Customer table
         String createCustomerTable = "CREATE TABLE " + TABLE_CUSTOMER + "(" +
                 COLUMN_CUSTOMER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -85,13 +98,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createVendorsTable);
         db.execSQL(createCustomerTable);
+        db.execSQL(createPaymentOptionsTable);
         //db.execSQL(createMenuTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
+        // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VENDOR);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER);
         onCreate(db);
     }
@@ -117,8 +132,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result !=-1;
     }
 
+
+
     public Boolean insertCustomerData(String customerUsername, String customerPassword, String customerFName,
-                                    String customerLName, String customerContactNumber)
+                                      String customerLName, String customerContactNumber)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -241,6 +258,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
         }
         return results>0;
+    }
+
+    public Boolean insertVendorPaymentOptions(String username, String cardPayment, String cashPayment)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_VENDOR_USERNAME, username);
+        cv.put(COLUMN_CARD_PAYMENT_OPTION, cardPayment);
+        cv.put(COLUMN_CASH_PAYMENT_OPTION, cashPayment);
+
+
+        long result = db.insert(TABLE_PAYMENT, null, cv);
+        if(result == -1){
+            Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return result !=-1;
+    }
+
+    public  boolean updatePaymentOptions(String username,String cardPayment, String cashPayment){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        // Delete the entry from the table
+        cv.put(COLUMN_CARD_PAYMENT_OPTION,cardPayment);
+        cv.put(COLUMN_CASH_PAYMENT_OPTION,cashPayment);
+        long results = campusFoodExpressDB.update(TABLE_PAYMENT,cv,COLUMN_VENDOR_USERNAME + " = ?",new String[]{username});
+
+        if(results < 0){
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return results>0;
+    }
+    public boolean deletePaymentOptions(String username){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?";
+        String[] whereArgs = {username};
+
+        // Delete the entry from the table
+        int vendor = campusFoodExpressDB.delete(TABLE_PAYMENT, whereClause, whereArgs);
+        return vendor !=-1;
+    }
+
+    public PaymentOption getPaymentOptions(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_PAYMENT, null, COLUMN_USERNAME + " = ?", new String[]{username}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            // Retrieve data from cursor
+            @SuppressLint("Range") String cardPayment = cursor.getString(cursor.getColumnIndex(COLUMN_CARD_PAYMENT_OPTION));
+            @SuppressLint("Range") String cashPayment = cursor.getString(cursor.getColumnIndex(COLUMN_CASH_PAYMENT_OPTION));
+
+            // Retrieve other relevant data
+
+            // Create and return a VendorData object with the retrieved data
+            return new PaymentOption(username,cardPayment,cashPayment);
+        } else {
+            return null; // Vendor data not found
+        }
     }
 
     public boolean updateCustomerDetails(String custUsername,String custFname,String custLname,String custContactNumber){

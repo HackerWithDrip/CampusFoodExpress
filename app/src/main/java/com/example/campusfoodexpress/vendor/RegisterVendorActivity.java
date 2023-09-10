@@ -169,6 +169,7 @@ public class RegisterVendorActivity extends AppCompatActivity {
         if (!checkVendor) {
             Boolean isInserted = DB.insertVendorData(username, password, businessName, contactNumber, businessHours, businessLocation, businessBio);
             if (isInserted) {
+                DB.insertVendorPaymentOptions(username,"false","false");
                 Intent intent = new Intent(this, LoginActivity.class);
                 loadingDialog = new LoadingDialog(RegisterVendorActivity.this,"Registering...");
                 loadingDialog.startLoadingDialog();
