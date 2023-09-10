@@ -245,7 +245,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 if (!username.equals("")) {
                     DatabaseHelper dbHelper = new DatabaseHelper(UpdateDetailsActivity.this);
                     boolean isDeleted = dbHelper.deleteVendor(username);
-                    if (isDeleted) {
+                    boolean paymentReset = dbHelper.deletePaymentOptions(username);
+                    if (isDeleted && paymentReset) {
                         edtBusinessName.setText("");
                         edtContactNumber.setText("");
                         edtClosestBuilding.setText("");
@@ -253,7 +254,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                         pickStartTime.setText("");
                         pickEndTime.setText("");
                         setResult(RESULT_OK);
-                        Intent intent = new Intent(UpdateDetailsActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(UpdateDetailsActivity.this, WelcomeActivity.class);
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override

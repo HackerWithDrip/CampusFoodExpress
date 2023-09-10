@@ -30,7 +30,7 @@
         <activity
             android:name=".vendor.MaintainPaymentOptions"
             android:exported="false"
-            android:parentActivityName=".vendor.MainActivity">
+           >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
