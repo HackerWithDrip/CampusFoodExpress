@@ -147,6 +147,66 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        swtFishAndChips.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    txtFishAndChips.setTextColor(Color.parseColor("#2db83d"));
+                } else {
+                    txtFishAndChips.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
+        swtKota.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    txtKota.setTextColor(Color.parseColor("#2db83d"));
+                } else {
+                    txtKota.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
+        swtPie.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    txtPie.setTextColor(Color.parseColor("#2db83d"));
+                } else {
+                    txtPie.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
+        swtWings.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    txtWings.setTextColor(Color.parseColor("#2db83d"));
+                } else {
+                    txtWings.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
+        swtOG.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    txtOG.setTextColor(Color.parseColor("#2db83d"));
+                } else {
+                    txtOG.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
     }
 
     public void onCancelClicked(View view) {
