@@ -6,19 +6,553 @@
     android:layout_height="match_parent"
     tools:context=".vendor.MenuActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/foodItemRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/foodListConst"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/foodItemRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                android:baselineAligned="false"
+                android:isScrollContainer="true"
+                android:nestedScrollingEnabled="true"
+                android:orientation="vertical"
+                android:scrollIndicators="right"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbarStyle="insideOverlay"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchBurger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarBurger"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/burger" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemBurger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Burger"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider0"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchGrilledChicken"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarGrilledChicken"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/grilled_chicken" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemGrilledChicken"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Grilled Chicken"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchFishAndChips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarFishAndChips"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/fish_chips" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemFishAndChips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Fish and Chips"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchKota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarKota"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/kota" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemKota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Kota"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchPie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarPie"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/pie" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemPie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Pie"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchWings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarWings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/wings" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemWings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Wings and Chips"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="128dp">
+
+                    <Switch
+                        android:id="@+id/btnSwitchOG"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        android:scaleX="1.25"
+                        android:scaleY="1.25"
+                        android:scrollbarSize="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                    <ImageView
+                        android:id="@+id/avatarOG"
+                        android:paddingBottom="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/for_the_ogs" />
+
+                    <TextView
+                        android:id="@+id/txtFoodItemOG"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="4dp"
+                        android:text="Stuff for the OGs"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:background="@color/blue"
+                        android:backgroundTint="@color/blue"
+                        android:backgroundTintMode="add"
+                        android:foreground="@color/blue"
+                        android:foregroundTint="@color/blue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:background="?android:attr/actionModeSplitBackground"
+                    android:backgroundTint="@color/blue" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="?android:attr/actionModeSplitBackground"
+        android:backgroundTint="@color/blue"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveChanges"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodListConst" />
     <Button
         android:id="@+id/btnSaveChanges"
         android:layout_width="128dp"
@@ -30,7 +564,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodItemRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/foodListConst" />
 
     <Button
         android:id="@+id/btnCancelChanges"
@@ -44,5 +578,5 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodItemRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/foodListConst" />
 </androidx.constraintlayout.widget.ConstraintLayout>

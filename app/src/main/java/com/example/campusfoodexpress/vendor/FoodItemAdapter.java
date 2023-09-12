@@ -2,10 +2,11 @@ package com.example.campusfoodexpress.vendor;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
     private Context context;
     private List<FoodItem> foodItems;
     Activity activity;
-    Boolean switchOn = false;
     private View.OnClickListener onClickListener;
 
     public FoodItemAdapter(Context context, List<FoodItem> foodItems, Activity activity) {
@@ -42,7 +42,7 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
     public void onBindViewHolder(@NonNull FoodItemAdapter.MyViewHolder holder, int position) {
         FoodItem foodItem = foodItems.get(position);
         holder.foodItemName.setText(String.valueOf(foodItem.getFoodItemName()));
-        holder.btnSwitch.setChecked(foodItem.getSwitchState());
+        holder.btnSwitch.setChecked(foodItem.isFoodItemAvailable());
         String fooItemNameString = foodItem.getFoodItemName().toLowerCase();
         if (!fooItemNameString.equals("")) {
             switch(fooItemNameString) {
@@ -72,6 +72,27 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
             }
         }
 
+        holder.btnSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Change the background color when the switch is checked
+                    holder.foodItemName.setTextColor(Color.parseColor("#2DB83D"));
+                    holder.avatar.setColorFilter(null);
+                  
+
+
+//                    isCardPayment = "true";
+                } else {
+                    // Change the background color when the switch is unchecked
+
+                    holder.foodItemName.setTextColor(Color.GRAY);
+                    holder.avatar.setColorFilter(Color.GRAY, android.graphics.PorterDuff.Mode.MULTIPLY);
+//                    isCardPayment = "false";
+                }
+            }
+        });
+
         foodItem.setSwitchState(holder.btnSwitch.isChecked());
     }
     public void setOnClickListener(View.OnClickListener onClickListener) {
@@ -94,7 +115,7 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
             super(itemView);
             foodItemName = itemView.findViewById(R.id.txtFoodItemName);
             avatar = itemView.findViewById(R.id.avatar);
-            btnSwitch = itemView.findViewById(R.id.btnSwitch);
+            btnSwitch = itemView.findViewById(R.id.btnSwitchBurger);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 
         }

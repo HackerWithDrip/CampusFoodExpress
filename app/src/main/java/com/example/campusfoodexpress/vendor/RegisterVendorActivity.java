@@ -21,6 +21,8 @@ import com.example.campusfoodexpress.dialogs.LoadingDialog;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.SignupActivity;
 
+import java.util.List;
+
 import database.DatabaseHelper;
 
 public class RegisterVendorActivity extends AppCompatActivity {
@@ -168,8 +170,15 @@ public class RegisterVendorActivity extends AppCompatActivity {
         Boolean checkVendor = DB.checkUsername(username);
         if (!checkVendor) {
             Boolean isInserted = DB.insertVendorData(username, password, businessName, contactNumber, businessHours, businessLocation, businessBio);
+
             if (isInserted) {
                 DB.insertVendorPaymentOptions(username,"false","false");
+                List<FoodItem> foodItemList = DB.getFoodItems(username);
+
+                for(int i = 0 ;i <foodItemList.size();i++){
+                    DB.insertVendorMenu(username,String.valueOf(foodItemList.get(i).getId()),foodItemList.get(i).getFoodItemName(),"false");
+                }
+
                 Intent intent = new Intent(this, LoginActivity.class);
                 loadingDialog = new LoadingDialog(RegisterVendorActivity.this,"Registering...");
                 loadingDialog.startLoadingDialog();
