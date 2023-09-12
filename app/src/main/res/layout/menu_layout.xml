@@ -12,7 +12,7 @@
         android:layout_height="128dp">
 
         <Switch
-            android:id="@+id/btnSwitch"
+            android:id="@+id/btnSwitchBurger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"

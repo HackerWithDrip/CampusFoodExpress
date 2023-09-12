@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.campusfoodexpress.customer.CustomerData;
@@ -39,6 +40,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CASH_PAYMENT_OPTION = "cashPaymentOption";
     public static final String COLUMN_VENDOR_USERNAME = "username";
 
+    //Menu table
+    public static final String TABLE_MENU= "vendorMenu";
+    public static final String COLUMN_VENDOR_USERNAME_MENU = "username";
+    public static final String COLUMN_FOOD_ID = "foodID";
+    public static final String COLUMN_FOOD_ITEM_NAME = "foodItemName";
+    public static final String COLUMN_AVAILABILITY = "isAvailable";
+
 
     // Customer table
     public static final String TABLE_CUSTOMER = "Customers";
@@ -49,10 +57,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CUSTOMER_USERNAME = "customerUsername";
     public static final String COLUMN_CUSTOMER_PASSWORD = "customerPassword";
 
-    // Menu table
-    public static final String TABLE_MENU = "Menu";
-    public static final String COLUMN_MENU_ID = "menuID";
-    public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
+//    // Menu table
+//    public static final String TABLE_MENU = "Menu";
+//    public static final String COLUMN_MENU_ID = "menuID";
+//    public static final String COLUMN_MENU_DESCRIPTION = "menuDescription";
 
     // Common column for Vendor and Menu table
     public static final String COLUMN_VENDOR_ID = "vendorID"; // Foreign key from Vendors
@@ -90,16 +98,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_CUSTOMER_PASSWORD + " TEXT)";
 
         // Create Menu table
-        String createMenuTable = "CREATE TABLE " + TABLE_MENU + "(" +
-                COLUMN_MENU_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                COLUMN_VENDOR_ID + " INTEGER," +
-                COLUMN_MENU_DESCRIPTION + " TEXT," +
-                "FOREIGN KEY(" + COLUMN_VENDOR_ID + ") REFERENCES " + TABLE_VENDOR + "(" + COLUMN_BUSINESS_ID + "))";
+        String createVendorMenuTable = "CREATE TABLE " + TABLE_MENU + "(" +
+                COLUMN_VENDOR_USERNAME_MENU + " TEXT," +
+                COLUMN_FOOD_ID + " TEXT," +
+                COLUMN_FOOD_ITEM_NAME + " TEXT," +
+                COLUMN_AVAILABILITY + " TEXT)";
 
         db.execSQL(createVendorsTable);
         db.execSQL(createCustomerTable);
         db.execSQL(createPaymentOptionsTable);
-        //db.execSQL(createMenuTable);
+        db.execSQL(createVendorMenuTable);
     }
 
     @Override
@@ -108,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_VENDOR);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
         onCreate(db);
     }
 
@@ -134,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+
     public Boolean insertCustomerData(String customerUsername, String customerPassword, String customerFName,
                                       String customerLName, String customerContactNumber)
     {
@@ -154,15 +164,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result !=-1;
     }
 
-    public Boolean insertMenuData(int vendorID, String menuDescription) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_VENDOR_ID, vendorID);
-        cv.put(COLUMN_MENU_DESCRIPTION, menuDescription);
-
-        long result = db.insert(TABLE_MENU, null, cv);
-        return result != -1;
-    }
+//    public Boolean insertMenuData(int vendorID, String menuDescription) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues cv = new ContentValues();
+//        cv.put(COLUMN_VENDOR_ID, vendorID);
+//        cv.put(COLUMN_MENU_DESCRIPTION, menuDescription);
+//
+//        long result = db.insert(TABLE_MENU, null, cv);
+//        return result != -1;
+//    }
 
     public Boolean checkUsername(String username){
         SQLiteDatabase vendorDB = this.getWritableDatabase();
@@ -204,6 +214,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
+
     public CustomerData getCustomerDataByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CUSTOMER, null, " customerUsername " + " = ?", new String[]{username}, null, null, null);
@@ -231,6 +243,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int vendor = campusFoodExpressDB.delete(TABLE_VENDOR, whereClause, whereArgs);
         return vendor !=-1;
     }
+
+
+
+
+    //Menu manipulations
+    public Boolean insertVendorMenu(String username, String foodID,String foodItemName, String isAvailable)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_VENDOR_USERNAME_MENU, username);
+        cv.put(COLUMN_FOOD_ID, foodID);
+        cv.put(COLUMN_FOOD_ITEM_NAME, foodItemName);
+        cv.put(COLUMN_AVAILABILITY, isAvailable);
+
+        long result = db.insert(TABLE_MENU, null, cv);
+        if(result == -1){
+            Toast.makeText(context,"Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return result !=-1;
+    }
+
+    public List<FoodItem> getVendorMenu(String username) {
+        List<FoodItem> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_MENU, null, COLUMN_VENDOR_USERNAME_MENU + " = ?", new String[]{username}, null, null, null);
+
+        while (cursor.moveToNext()) {
+            // Retrieve data from cursor
+            @SuppressLint("Range") String vendorUsername = cursor.getString(cursor.getColumnIndex(COLUMN_VENDOR_USERNAME_MENU));
+            @SuppressLint("Range") String foodID = cursor.getString(cursor.getColumnIndex(COLUMN_FOOD_ID));
+            @SuppressLint("Range") String foodItemName = cursor.getString(cursor.getColumnIndex(COLUMN_FOOD_ITEM_NAME));
+            @SuppressLint("Range") String isAvailable = cursor.getString(cursor.getColumnIndex(COLUMN_AVAILABILITY));
+
+            // Retrieve other relevant data
+//            String foodItemName = "";
+            int foodId = Integer.parseInt(foodID);
+
+            // Create and return a VendorData object with the retrieved data
+            if(username.equals(vendorUsername))
+                returnList.add(new FoodItem(vendorUsername,foodId,foodItemName,isAvailable));
+        }
+
+        return returnList;
+    }
+
+    public boolean deleteVendorMenu(String username){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?";
+        String[] whereArgs = {username};
+
+        // Delete the entry from the table
+        int vendor = campusFoodExpressDB.delete(TABLE_MENU, whereClause, whereArgs);
+        return vendor !=-1;
+    }
+
+    public  boolean updateMenu(String username,String foodID, String foodItemName,String isAvailable){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        // Delete the entry from the table
+        cv.put(COLUMN_VENDOR_USERNAME_MENU,username);
+        cv.put(COLUMN_FOOD_ID,foodID);
+        cv.put(COLUMN_FOOD_ITEM_NAME,foodItemName);
+        cv.put(COLUMN_AVAILABILITY,isAvailable);
+        long results = campusFoodExpressDB.update(TABLE_MENU,cv,COLUMN_VENDOR_USERNAME + " = ?" + " AND " + COLUMN_FOOD_ID + " = ?",new String[]{username,foodID});
+
+        if(results < 0){
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return results>0;
+    }
+
+
+    //END OF MENU MANIPULATION
+
+
 
     public boolean deleteCustomer(String custUsername){
         SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
@@ -339,16 +427,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return results>0;
     }
 
-    public List<FoodItem> getFoodItems(){
+    public List<FoodItem> getFoodItems(String vendorUsername){
         List<FoodItem> returnList = new ArrayList<>();
 
-        returnList.add(new  FoodItem(1,"Burger"));
-        returnList.add(new FoodItem(2,"Grilled Chicken"));
-        returnList.add(new FoodItem(3,"Wings & Chips"));
-        returnList.add(new FoodItem(4,"Pie"));
-        returnList.add(new FoodItem(5,"Kota"));
-        returnList.add(new FoodItem(6,"Fish & Chips"));
-        returnList.add(new FoodItem(7,"Stuff for the OG"));
+        returnList.add(new  FoodItem(vendorUsername,1,"Burger"));
+        returnList.add(new FoodItem(vendorUsername,2,"Grilled Chicken"));
+        returnList.add(new FoodItem(vendorUsername,6,"Wings and Chips"));
+        returnList.add(new FoodItem(vendorUsername,5,"Pie"));
+        returnList.add(new FoodItem(vendorUsername,4,"Kota"));
+        returnList.add(new FoodItem(vendorUsername,3,"Fish and Chips"));
+        returnList.add(new FoodItem(vendorUsername,7,"Stuff for the OG"));
 
         return  returnList;
     }

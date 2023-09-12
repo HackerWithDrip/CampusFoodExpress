@@ -4,13 +4,24 @@ import java.io.Serializable;
 
 public class FoodItem implements Serializable {
     private int id;
-    private String foodItemName;
-    private boolean switchState;
+    private String foodItemName,vendorUsername;
+    private boolean isAvailable;
 
-    public FoodItem(int id, String foodItemName) {
+    public FoodItem(String vendorUsername,int id, String foodItemName) {
+        this.vendorUsername = vendorUsername;
         this.id = id;
         this.foodItemName = foodItemName;
-        this.switchState = false;
+        this.isAvailable = false;
+    }
+
+    public FoodItem(String vendorUsername,int id, String foodItemName,String isAvailable) {
+        this.vendorUsername = vendorUsername;
+        this.id = id;
+        this.foodItemName = foodItemName;
+        if(isAvailable.equalsIgnoreCase("true"))
+            this.isAvailable = true;
+        else
+            this.isAvailable = false;
     }
 
     public int getId() {
@@ -25,6 +36,10 @@ public class FoodItem implements Serializable {
         return foodItemName;
     }
 
+    public String getVendorUsername(){return vendorUsername;}
+
+    public Boolean isFoodItemAvailable(){return (isAvailable);}
+
     public void setFoodItemName(String foodItemName) {
         this.foodItemName = foodItemName;
     }
@@ -34,10 +49,10 @@ public class FoodItem implements Serializable {
     }
 
     public boolean getSwitchState() {
-        return switchState;
+        return isAvailable;
     }
 
     public void setSwitchState(boolean switchState) {
-        this.switchState = switchState;
+        this.isAvailable = switchState;
     }
 }
