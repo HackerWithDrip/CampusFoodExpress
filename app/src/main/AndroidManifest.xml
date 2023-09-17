@@ -13,6 +13,13 @@
         android:theme="@style/Theme.CampusFoodExpress"
         tools:targetApi="31">
         <activity
+            android:name=".CurrentOrdersActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".customer.CustomerDashboardActivity"
             android:exported="false">
             <meta-data
@@ -21,16 +28,14 @@
         </activity>
         <activity
             android:name=".vendor.MenuActivity"
-            android:exported="false"
-            >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".vendor.MaintainPaymentOptions"
-            android:exported="false"
-           >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -99,4 +99,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("username",loggedInVendor );
         startActivity(intent);
     }
+
+    public void onViewCurrentOrdersLicked(View view) {
+    }
 }
