@@ -166,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_ORDER, null, COLUMN_VENDOR_USERNAME_MENU + " = ?", new String[]{username}, null, null, null);
 
-        if (cursor.moveToFirst()) {
+        while (cursor.moveToNext()) {
             // Retrieve data from cursor
             @SuppressLint("Range") String orderID = cursor.getString(cursor.getColumnIndex(COLUMN_ORDER_ID));
             @SuppressLint("Range") String vendor = cursor.getString(cursor.getColumnIndex(COLUMN_VENDOR_USERNAME));
@@ -194,9 +194,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), localTime);
             returnList.add(new OrderDetails(Integer.parseInt(orderID),status,customerName,customerSurname,customerPhone,dateTime,amountDue,foods));
         }
-        else {
-            return null;
-        }
+
 
         return returnList;
     }
