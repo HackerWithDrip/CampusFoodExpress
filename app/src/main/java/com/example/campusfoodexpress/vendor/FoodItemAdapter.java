@@ -34,7 +34,7 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
     @Override
     public FoodItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.menu_layout,parent,false);
+        View view = inflater.inflate(R.layout.order_layout,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -113,8 +113,8 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodItemName = itemView.findViewById(R.id.txtFoodItemName);
-            avatar = itemView.findViewById(R.id.avatar);
+            foodItemName = itemView.findViewById(R.id.txtOrderNumber);
+//            avatar = itemView.findViewById(R.id.);
             btnSwitch = itemView.findViewById(R.id.btnSwitchBurger);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 

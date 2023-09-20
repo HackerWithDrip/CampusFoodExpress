@@ -113,6 +113,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceBurger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -182,6 +195,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceGrilledChicken"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -251,6 +277,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceFishAndChips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarFishAndChips"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -320,6 +360,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceKota"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarKota"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -389,6 +443,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPricePie"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarPie"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -458,6 +526,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceWings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarWings"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -527,6 +609,20 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="parent" />
+
+                    <TextView
+                        android:id="@+id/txtPriceOG"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="24dp"
+                        android:padding="4dp"
+                        android:text="[Price]"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold|italic"
+                        app:layout_constraintEnd_toEndOf="@+id/avatarOG"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View

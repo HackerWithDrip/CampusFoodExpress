@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class FoodItem implements Serializable {
     private int id;
+    private Double price;
     private String foodItemName,vendorUsername;
     private boolean isAvailable;
 
@@ -13,6 +14,14 @@ public class FoodItem implements Serializable {
         this.foodItemName = foodItemName;
         this.isAvailable = false;
     }
+
+    public FoodItem(String vendorUsername,int id, String foodItemName, Double price) {
+        this.vendorUsername = vendorUsername;
+        this.id = id;
+        this.foodItemName = foodItemName;
+        this.price = price;
+    }
+
 
     public FoodItem(String vendorUsername,int id, String foodItemName,String isAvailable) {
         this.vendorUsername = vendorUsername;
@@ -24,8 +33,23 @@ public class FoodItem implements Serializable {
             this.isAvailable = false;
     }
 
+    public FoodItem(String vendorUsername, int foodId, String foodItemName, String isAvailable, Double price) {
+        this.vendorUsername = vendorUsername;
+        this.id = foodId;
+        this.foodItemName = foodItemName;
+        this.price = price;
+        if(isAvailable.equalsIgnoreCase("true"))
+            this.isAvailable = true;
+        else
+            this.isAvailable = false;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public Double getPrice() {
+        return price;
     }
 
     public void setId(int id) {
