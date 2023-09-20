@@ -113,8 +113,8 @@ public class FoodItemAdapter  extends RecyclerView.Adapter<FoodItemAdapter.MyVie
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodItemName = itemView.findViewById(R.id.txtFoodItemName);
-            avatar = itemView.findViewById(R.id.avatar);
+            foodItemName = itemView.findViewById(R.id.txtOrderNumber);
+//            avatar = itemView.findViewById(R.id.);
             btnSwitch = itemView.findViewById(R.id.btnSwitchBurger);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 

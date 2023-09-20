@@ -21,6 +21,13 @@ import com.example.campusfoodexpress.dialogs.LoadingDialog;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.SignupActivity;
 
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import database.DatabaseHelper;
@@ -176,8 +183,37 @@ public class RegisterVendorActivity extends AppCompatActivity {
                 List<FoodItem> foodItemList = DB.getFoodItems(username);
 
                 for(int i = 0 ;i <foodItemList.size();i++){
-                    DB.insertVendorMenu(username,String.valueOf(foodItemList.get(i).getId()),foodItemList.get(i).getFoodItemName(),"false");
+                    DB.insertVendorMenu(username,String.valueOf(foodItemList.get(i).getId()),foodItemList.get(i).getFoodItemName(),"false",foodItemList.get(i).getPrice());
                 }
+
+                //PLACING RANDOM ORDERS
+
+                //ORDER 1
+                String timeInput = "09:45";
+                LocalTime localTime = LocalTime.parse(timeInput, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalDateTime dateTime = LocalDateTime.of(LocalDate.now(), localTime);
+                List<FoodItem> foodList = Arrays.asList(foodItemList.get(0), foodItemList.get(3));
+                List<Integer> quantities = Arrays.asList(2, 3);
+                DB.placeOrder(foodList,quantities, "Lionel","Raseemela","0670880796",dateTime,username);
+
+
+
+                //ORDER 2
+                String timeInput2 = "10:47";
+                LocalTime localTime2 = LocalTime.parse(timeInput2, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalDateTime dateTime2 = LocalDateTime.of(LocalDate.now(), localTime2);
+                foodList = Arrays.asList(foodItemList.get(1), foodItemList.get(2));
+                quantities = Arrays.asList(1, 2);
+                DB.placeOrder(foodList,quantities, "Amos","Cherera","0711857038",dateTime2,username);
+
+
+                //ORDER 3
+                String timeInput3 = "14:44";
+                LocalTime localTime3 = LocalTime.parse(timeInput3, DateTimeFormatter.ofPattern("HH:mm"));
+                LocalDateTime dateTime3 = LocalDateTime.of(LocalDate.now(), localTime3);
+                foodList = Arrays.asList(foodItemList.get(4), foodItemList.get(5));
+                quantities = Arrays.asList(2, 1);
+                DB.placeOrder(foodList,quantities, "Thabo","Bester","0670880796",dateTime3,username);
 
                 Intent intent = new Intent(this, LoginActivity.class);
                 loadingDialog = new LoadingDialog(RegisterVendorActivity.this,"Registering...");

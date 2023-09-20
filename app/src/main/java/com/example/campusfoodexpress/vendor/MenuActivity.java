@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.example.campusfoodexpress.R;
 import com.example.campusfoodexpress.dialogs.LoadingDialog;
 
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import database.DatabaseHelper;
 
@@ -28,6 +31,7 @@ public class MenuActivity extends AppCompatActivity {
     LoadingDialog loadingDialog;
     String username;
     TextView txtBurger,txtGrilledChicken,txtFishAndChips,txtKota,txtPie,txtWings,txtOG;
+    TextView txtPriceBurger,txtPriceGrilledChicken,txtPriceFishAndChips,txtPriceKota,txtPricePie,txtPriceWings,txtPriceOG;
     Switch swtBurger,swtGrilledChicken,swtFishAndChips,swtKota,swtPie,swtWings,swtOG;
     List<FoodItem> foodItemList;
 
@@ -57,8 +61,16 @@ public class MenuActivity extends AppCompatActivity {
         swtWings = findViewById(R.id.btnSwitchWings);
         swtOG = findViewById(R.id.btnSwitchOG);
 
+        txtPriceBurger = findViewById(R.id.txtPriceBurger);
+        txtPriceGrilledChicken = findViewById(R.id.txtPriceGrilledChicken);
+        txtPriceFishAndChips = findViewById(R.id.txtPriceFishAndChips);
+        txtPriceKota = findViewById(R.id.txtPriceKota);
+        txtPricePie = findViewById(R.id.txtPricePie);
+        txtPriceWings = findViewById(R.id.txtPriceWings);
+        txtPriceOG = findViewById(R.id.txtPriceOG);
 
-
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("en", "ZA"));
+        currencyFormatter.setCurrency(Currency.getInstance("ZAR"));
         if(intent.hasExtra("username"))
             username = intent.getStringExtra("username");
 
@@ -67,10 +79,13 @@ public class MenuActivity extends AppCompatActivity {
             foodItemList =  databaseHelper.getVendorMenu(username);
             for(int i = 0;i<foodItemList.size();i++){
                 int id = foodItemList.get(i).getId();
+                double price = foodItemList.get(i).getPrice();
+                String priceText = currencyFormatter.format(price);
                 Boolean isAvailable = foodItemList.get(i).isFoodItemAvailable();
                 switch (id){
                     case 1:
                         swtBurger.setChecked(isAvailable);
+                        txtPriceBurger.setText(priceText);
                         if(isAvailable)
                             txtBurger.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -78,6 +93,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 2:
                         swtGrilledChicken.setChecked(isAvailable);
+                        txtPriceGrilledChicken.setText(priceText);
                         if(isAvailable)
                             txtGrilledChicken.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -85,6 +101,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 3:
                         swtFishAndChips.setChecked(isAvailable);
+                        txtPriceFishAndChips.setText(priceText);
                         if(isAvailable)
                             txtFishAndChips.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -92,6 +109,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 4:
                         swtKota.setChecked(isAvailable);
+                        txtPriceKota.setText(priceText);
                         if(isAvailable)
                             txtKota.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -99,6 +117,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 5:
                         swtPie.setChecked(isAvailable);
+                        txtPricePie.setText(priceText);
                         if(isAvailable)
                             txtPie.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -106,6 +125,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 6:
                         swtWings.setChecked(isAvailable);
+                        txtPriceWings.setText(priceText);
                         if(isAvailable)
                             txtWings.setTextColor(Color.parseColor("#2db83d"));
                         else
@@ -113,6 +133,7 @@ public class MenuActivity extends AppCompatActivity {
                         break;
                     case 7:
                         swtOG.setChecked(isAvailable);
+                        txtPriceOG.setText(priceText);
                         if(isAvailable)
                             txtOG.setTextColor(Color.parseColor("#2db83d"));
                         else
