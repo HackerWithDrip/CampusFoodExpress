@@ -11,6 +11,7 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="4dp"
     android:padding="4dp"
+    app:cardBackgroundColor="#faf0e6"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp">
 
@@ -89,8 +90,9 @@
             android:gravity="center"
             android:padding="4dp"
             android:text="Order Details"
-            android:textColor="@color/blue"
+            android:textColor="@color/black"
             android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
@@ -134,7 +136,7 @@
             android:text="[R0.00]"
             android:textColor="@color/red"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.025"
             app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -222,7 +224,7 @@
             android:text="Total Due: "
             android:textColor="@color/red"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutFoodItemsXqty" />
 
