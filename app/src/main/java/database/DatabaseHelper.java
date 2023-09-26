@@ -240,6 +240,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public Boolean updateOrderStatus(String custName, String custSurname, String custContacts, LocalDateTime time, String vendorUsername,String orderID) {
+
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        // Delete the entry from the table
+        cv.put(COLUMN_VENDOR_USERNAME, vendorUsername);
+        cv.put(COLUMN_STATUS, "confirmed");
+        cv.put(COLUMN_CUSTOMER_NAME, custName);
+        cv.put(COLUMN_CUSTOMER_SURNAME, custSurname);
+        cv.put(COLUMN_CUSTOMER_CONTACT, custContacts);
+        cv.put(COLUMN_TIME, String.valueOf(time));
+        cv.put(COLUMN_ORDER_ID, orderID);
+        long results = campusFoodExpressDB.update(TABLE_ORDER,cv,COLUMN_VENDOR_USERNAME + " = ?" + " AND " + COLUMN_ORDER_ID + " = ?",new String[]{vendorUsername,orderID});
+
+        if(results < 0){
+            Toast.makeText(context,"Update Failed!",Toast.LENGTH_SHORT).show();
+        }
+        return results>0;
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);
