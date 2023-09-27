@@ -16,6 +16,7 @@
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constLayoutOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -139,7 +140,7 @@
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.025"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toEndOf="@+id/txtTotalLabel"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutFoodItemsXqty" />
 
         <Button
@@ -215,7 +216,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtTime"></LinearLayout>
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/txtTotalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="108dp"
