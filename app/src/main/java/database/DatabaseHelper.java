@@ -276,6 +276,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        return false;
     }
 
+    public boolean deleteAll(String username){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?";
+        String[] whereArgs = {username};
+
+        // Delete the entry from the table
+        int orders = campusFoodExpressDB.delete(TABLE_ORDER, whereClause, whereArgs);
+        int orderDetails = campusFoodExpressDB.delete(TABLE_ORDER_DETAILS, whereClause, whereArgs);
+        if(orders != -1 && orderDetails != -1){
+            Log.i("is order deleted","yes");
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // db.execSQL("DROP TABLE IF EXISTS " + TABLE_MENU);

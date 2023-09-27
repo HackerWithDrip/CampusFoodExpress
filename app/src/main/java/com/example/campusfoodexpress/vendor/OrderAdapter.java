@@ -290,6 +290,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                                 // Clear input fields
                                 if (isDeclined) {
                                     int pos = orderList.indexOf(order);
+                                    orderList.remove(pos);
                                     notifyItemRemoved(pos);
                                     loadingDialog.dismissDialog();
                                     Toast.makeText(v.getContext(), "Order Declined and message sent!", Toast.LENGTH_LONG).show();
@@ -327,6 +328,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                                 // Clear input fields
                                 if (isCancelled) {
                                     int pos = orderList.indexOf(order);
+                                    orderList.remove(pos);
                                     notifyItemRemoved(pos);
                                     loadingDialog.dismissDialog();
                                     Toast.makeText(v.getContext(), "Order Cancelled and message sent!", Toast.LENGTH_LONG).show();
