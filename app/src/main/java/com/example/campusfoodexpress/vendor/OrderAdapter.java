@@ -2,32 +2,39 @@ package com.example.campusfoodexpress.vendor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.campusfoodexpress.R;
+import com.example.campusfoodexpress.WelcomeActivity;
+import com.example.campusfoodexpress.dialogs.InteractiveDialog;
+import com.example.campusfoodexpress.dialogs.LoadingDialog;
 
 import java.text.NumberFormat;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
+import database.DatabaseHelper;
+
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
     private Context context;
     private List<OrderDetails> orderList;
     Activity activity;
     private View.OnClickListener onClickListener;
+    private String username;
 
     public OrderAdapter(Context context, List<OrderDetails> orderList, Activity activity) {
         this.context = context;
@@ -69,8 +76,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.txtOrderStatus.setText(String.valueOf(order.getOrderStatus()));
         if(order.getOrderStatus().equalsIgnoreCase("pending")){
             holder.txtOrderStatus.setTextColor(Color.parseColor("#FF0000"));
-        }else if(order.getOrderStatus().equalsIgnoreCase("confirmed"))
+        }else if(order.getOrderStatus().equalsIgnoreCase("confirmed")){
+            holder.btnAcceptOrder.setText("Update status");
+            holder.btnAcceptOrder.setBackgroundColor(Color.parseColor("#2c2cff"));
+            holder.txtOrderStatus.setText("Confirmed");
             holder.txtOrderStatus.setTextColor(Color.parseColor("#2DB83D"));
+        }
+
 
 
         holder.layoutFoodItemsXQuantity.removeAllViews();
@@ -88,6 +100,50 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             holder.layoutFoodItemsXQuantity.addView(textView);
         }
 
+        holder.btnAcceptOrder.setOnClickListener(v -> {
+            ConfirmCancelOrderDialog interactiveDialog = new ConfirmCancelOrderDialog(activity,"You're about to Accept an order...");
+            interactiveDialog.startInteractiveDialog();
+            interactiveDialog.btnYesOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Dismiss the confirmation dialog
+                    interactiveDialog.dismissDialog();
+                    // Show the loading dialog
+                    LoadingDialog loadingDialog = new LoadingDialog(activity, "Confirming order...");
+                    loadingDialog.startLoadingDialog();
+                    DatabaseHelper dbHelper = new DatabaseHelper(context);
+                    boolean isOrderUpdated = dbHelper.updateOrderStatus(order.customerName,order.customerSurname,order.customerPhone,
+                            order.time,activity.getIntent().getStringExtra("username"),String.valueOf(order.getOrderID()));
+
+//                    Intent intent = new Intent(activity, WelcomeActivity.class);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Clear input fields
+                            if(isOrderUpdated){
+                                loadingDialog.dismissDialog();
+                                Toast.makeText(v.getContext(),"Order confirmed successfully!",Toast.LENGTH_LONG).show();
+                                holder.btnAcceptOrder.setText("Update status");
+                                holder.btnAcceptOrder.setBackgroundColor(Color.parseColor("#2c2cff"));
+                                holder.txtOrderStatus.setText("Confirmed");
+                                holder.txtOrderStatus.setTextColor(Color.parseColor("#2DB83D"));
+                            }
+                        }
+                    }, 3000);
+                }
+            });
+
+            interactiveDialog.btnNoOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // User clicked "No," dismiss the confirmation dialog
+                    interactiveDialog.dismissDialog();
+                }
+            });
+
+        });
+
 
 
     }
@@ -104,7 +160,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public  class  OrderViewHolder extends RecyclerView.ViewHolder {
         TextView txtOrderNumber,txtOrderStatus,txtTotal,txtCustFnameLname,txtTime;
 
-        Button btnConfirm, btnCancelOrder;
+        Button btnAcceptOrder, btnDeclineOrder;
         androidx.cardview.widget.CardView mainLayout;
         LinearLayout layoutFoodItemsXQuantity;
 
@@ -116,10 +172,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             txtTotal = itemView.findViewById(R.id.txtTotal);
             txtCustFnameLname = itemView.findViewById(R.id.txtCustFnameLname);
             txtTime = itemView.findViewById(R.id.txtTime);
-            btnConfirm = itemView.findViewById(R.id.btnConfirm);
-            btnCancelOrder = itemView.findViewById(R.id.btnCancelOrder);
+            btnAcceptOrder = itemView.findViewById(R.id.btnAccept);
+            btnDeclineOrder = itemView.findViewById(R.id.btnCancelOrder);
             mainLayout = itemView.findViewById(R.id.mainLayout);
             layoutFoodItemsXQuantity = itemView.findViewById(R.id.linearLayoutFoodItemsXqty);
+
 
         }
     }
