@@ -45,7 +45,7 @@ public class CurrentOrdersActivity extends AppCompatActivity {
 
         if(username !=null){
             orders = dbHelper.getOrders(username);
-            adapter = new OrderAdapter(this,orders,CurrentOrdersActivity.this);
+            adapter = new OrderAdapter(this,orders,CurrentOrdersActivity.this,username);
 
             RecyclerView lstContacts = findViewById(R.id.lstOrders);
             RecyclerView.LayoutManager layoutManager;

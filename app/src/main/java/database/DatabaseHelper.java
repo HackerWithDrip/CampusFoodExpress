@@ -240,14 +240,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Boolean updateOrderStatus(String custName, String custSurname, String custContacts, LocalDateTime time, String vendorUsername,String orderID) {
+    public Boolean updateOrderStatus(String custName, String custSurname, String custContacts, LocalDateTime time, String vendorUsername,String orderID,String orderStatus) {
 
         SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         // Delete the entry from the table
         cv.put(COLUMN_VENDOR_USERNAME, vendorUsername);
-        cv.put(COLUMN_STATUS, "confirmed");
+        cv.put(COLUMN_STATUS, orderStatus);
         cv.put(COLUMN_CUSTOMER_NAME, custName);
         cv.put(COLUMN_CUSTOMER_SURNAME, custSurname);
         cv.put(COLUMN_CUSTOMER_CONTACT, custContacts);
@@ -261,6 +261,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return results>0;
     }
 
+    public boolean cancelDeclineOrder(String username,String orderID){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?" + " AND " +  "OrderID = ?";
+        String[] whereArgs = {username,orderID};
+
+        // Delete the entry from the table
+        int orders = campusFoodExpressDB.delete(TABLE_ORDER, whereClause, whereArgs);
+        int orderDetails = campusFoodExpressDB.delete(TABLE_ORDER_DETAILS, whereClause, whereArgs);
+       if(orders != -1 && orderDetails != -1){
+           Log.i("is order deleted","yes");
+           return true;
+       }
+       return false;
+    }
+
+    public boolean deleteAll(String username){
+        SQLiteDatabase campusFoodExpressDB = this.getWritableDatabase();
+        String whereClause = "username = ?";
+        String[] whereArgs = {username};
+
+        // Delete the entry from the table
+        int orders = campusFoodExpressDB.delete(TABLE_ORDER, whereClause, whereArgs);
+        int orderDetails = campusFoodExpressDB.delete(TABLE_ORDER_DETAILS, whereClause, whereArgs);
+        if(orders != -1 && orderDetails != -1){
+            Log.i("is order deleted","yes");
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -389,8 +418,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int vendor = campusFoodExpressDB.delete(TABLE_VENDOR, whereClause, whereArgs);
         return vendor !=-1;
     }
-
-
 
 
     //Start Menu manipulations

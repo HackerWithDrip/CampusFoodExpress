@@ -8,13 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.campusfoodexpress.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class ConfirmCancelOrderDialog {
     private Activity activity;
     private AlertDialog dialog;
     public Button btnYesOrder,btnNoOrder;
-    private TextView txtMsgOrder;
+    private TextView txtMsgOrder,txtQuestionOrder;
     private String msg;
+    private TextInputLayout textInputLayout;
 
     public ConfirmCancelOrderDialog(Activity activity, String textMsg) {
         this.activity = activity;
@@ -29,6 +31,32 @@ public class ConfirmCancelOrderDialog {
         btnYesOrder = dialogView.findViewById(R.id.btnYesOrder);
         btnNoOrder = dialogView.findViewById(R.id.btnNoOrder);
         txtMsgOrder = dialogView.findViewById(R.id.txtMsgOrder);
+        txtQuestionOrder = dialogView.findViewById(R.id.txtQuestionOrder);
+        textInputLayout = dialogView.findViewById(R.id.textCancellationReasonLayout);
+        txtMsgOrder.setText(msg);
+
+        if(msg.contains("Accept") ){
+//            txtQuestionOrder.setVisibility(View.GONE);
+            textInputLayout.setVisibility(View.GONE);
+        }
+        else if(msg.contains("ready")){
+            txtQuestionOrder.setVisibility(View.GONE);
+            textInputLayout.setVisibility(View.GONE);
+            btnYesOrder.setText("Yes");
+            btnNoOrder.setText("No");
+        }
+        else if (msg.contains("paid")){
+            txtQuestionOrder.setVisibility(View.GONE);
+            textInputLayout.setVisibility(View.GONE);
+            btnYesOrder.setText("Yes");
+            btnNoOrder.setText("No");
+        }
+        else if (msg.contains("CANCEL") || msg.contains("DECLINE")){
+            txtQuestionOrder.setVisibility(View.GONE);
+            btnYesOrder.setText("Send");
+            btnNoOrder.setText("Cancel");
+        }
+
 
         builder.setView(dialogView);
         builder.setCancelable(false);

@@ -247,7 +247,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                     boolean isDeleted = dbHelper.deleteVendor(username);
                     boolean paymentReset = dbHelper.deletePaymentOptions(username);
                     boolean removeMenu = dbHelper.deleteVendorMenu(username);
-                    if (isDeleted && paymentReset && removeMenu) {
+                    boolean ordersRemoved = dbHelper.deleteAll(username);
+                    if (isDeleted && paymentReset && removeMenu && ordersRemoved) {
                         edtBusinessName.setText("");
                         edtContactNumber.setText("");
                         edtClosestBuilding.setText("");
