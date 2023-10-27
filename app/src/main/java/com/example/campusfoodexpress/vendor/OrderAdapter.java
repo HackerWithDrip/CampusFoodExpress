@@ -270,11 +270,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 //            holder.txtQuestionOrder.setVisibility(View.GONE);
             if(holder.btnDeclineOrder.getText().toString().equalsIgnoreCase("decline")) {
                 ConfirmCancelOrderDialog interactiveDialog = new ConfirmCancelOrderDialog(activity, "You're about to DECLINE this order...");
+
                 interactiveDialog.startInteractiveDialog();
                 interactiveDialog.btnYesOrder.setOnClickListener(new View.OnClickListener() {
+                    String cancelReason = "";
                     @Override
                     public void onClick(View v) {
                         // Dismiss the confirmation dialog
+                        if(String.valueOf(interactiveDialog.textCancelReason.getText()).trim().equals("")
+
+                        ||String.valueOf(interactiveDialog.textCancelReason.getText()).trim().length()<4 ){
+                            interactiveDialog.textCancelReason.setError("Reason is required!");
+                            return;
+                        }
                         interactiveDialog.dismissDialog();
                         // Show the loading dialog
                         LoadingDialog loadingDialog = new LoadingDialog(activity, "Declining order and " + "Notifying " + order.customerName +"...");
@@ -310,8 +318,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 ConfirmCancelOrderDialog interactiveDialog = new ConfirmCancelOrderDialog(activity, "You're about to CANCEL this order...");
                 interactiveDialog.startInteractiveDialog();
                 interactiveDialog.btnYesOrder.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
+                        if(String.valueOf(interactiveDialog.textCancelReason.getText()).trim().equals("")
+
+                                ||String.valueOf(interactiveDialog.textCancelReason.getText()).trim().length()<4 ){
+                            interactiveDialog.textCancelReason.setError("Reason is required!");
+                            return;
+                        }
                         // Dismiss the confirmation dialog
                         interactiveDialog.dismissDialog();
                         // Show the loading dialog
