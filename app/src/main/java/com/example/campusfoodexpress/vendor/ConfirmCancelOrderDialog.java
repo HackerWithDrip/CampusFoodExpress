@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.campusfoodexpress.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class ConfirmCancelOrderDialog {
@@ -17,6 +18,8 @@ public class ConfirmCancelOrderDialog {
     private TextView txtMsgOrder,txtQuestionOrder;
     private String msg;
     private TextInputLayout textInputLayout;
+    TextInputEditText textCancelReason;
+    String reason;
 
     public ConfirmCancelOrderDialog(Activity activity, String textMsg) {
         this.activity = activity;
@@ -33,6 +36,7 @@ public class ConfirmCancelOrderDialog {
         txtMsgOrder = dialogView.findViewById(R.id.txtMsgOrder);
         txtQuestionOrder = dialogView.findViewById(R.id.txtQuestionOrder);
         textInputLayout = dialogView.findViewById(R.id.textCancellationReasonLayout);
+        textCancelReason = dialogView.findViewById(R.id.textCancelReason);
         txtMsgOrder.setText(msg);
 
         if(msg.contains("Accept") ){
@@ -53,9 +57,12 @@ public class ConfirmCancelOrderDialog {
         }
         else if (msg.contains("CANCEL") || msg.contains("DECLINE")){
             txtQuestionOrder.setVisibility(View.GONE);
+            reason = String.valueOf(textCancelReason.getText());
             btnYesOrder.setText("Send");
             btnNoOrder.setText("Cancel");
         }
+
+
 
 
         builder.setView(dialogView);
